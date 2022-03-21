@@ -46,6 +46,7 @@ def param_grid_mod(dict_params):
     try:
         dict_params['max_features'] = float(dict_params['max_features'])
     except:
+
         dict_params['max_features'] = dict_params['max_features']
     return dict_params
 
