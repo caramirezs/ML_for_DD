@@ -1,4 +1,4 @@
-name: DS_for_DD
+name: ML_for_DD
 channels:
   - conda-forge
   - schrodinger
