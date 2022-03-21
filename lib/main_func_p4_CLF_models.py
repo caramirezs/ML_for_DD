@@ -37,23 +37,6 @@ def create_param_grid(param_grid, file_name):
     return None
 
 
-def create_results_file(param_grid, file_name):
-    import csv
-    head_params = list(param_grid.keys())
-    columns_train = ['auc_score_train', 'accuracy_score_train', 'sens_score_train',
-                     'spec_score_train', 'prec_score_train', 'confusion_m_train']
-    columns_test = ['auc_score_test', 'accuracy_score_test', 'sens_score_test',
-                    'spec_score_test', 'prec_score_test', 'f1_score_test', 'confusion_m_test', 'time']
-    columns_name = list(head_params)
-    columns_name.extend(columns_train)
-    columns_name.extend(columns_test)
-
-    with open(file_name, 'w') as file:
-        writer = csv.writer(file, lineterminator='\n', delimiter=",")
-        writer.writerow(columns_name)
-    return None
-
-
 def param_grid_mod(dict_params):
     try:
         dict_params['max_samples'] = float(dict_params['max_samples'])

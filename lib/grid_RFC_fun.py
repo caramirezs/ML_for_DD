@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 # sklearn:
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
@@ -16,19 +17,28 @@ def path(uniprot_id):
     return f'./data/{uniprot_id}/{uniprot_id}'
 
 
-def carga_datos(uniprot_id, resample=True):
+def carga_datos(uniprot_id, resample_factor=0):
     # Carga de datos
     path_file = path(uniprot_id)
     df_target = pd.read_pickle(f'{path_file}_dataset')
 
-    if resample:
+    if resample_factor != 0:
         fp_df = df_target.copy()
         fp_df_active = fp_df[fp_df.activity == 1]
         fp_df_inactive = fp_df[fp_df.activity == 0]
+        ratio = len(fp_df_inactive) / len(fp_df_active)
+
+        if ratio < 1:
+            ratio = 1/ratio
+
+        new_ratio = min(ratio, resample_factor)
+        n_sample = round(new_ratio * min(len(fp_df_inactive), len(fp_df_active)))
+
         if len(fp_df_active) > len(fp_df_inactive):
-            fp_df_active = fp_df_active.sample(len(fp_df_inactive))
+            fp_df_active = fp_df_active.sample(n_sample)
         elif len(fp_df_inactive) > len(fp_df_active):
-            fp_df_inactive = fp_df_inactive.sample(len(fp_df_active))
+            fp_df_inactive = fp_df_inactive.sample(n_sample)
+
         fp_df_down = pd.concat([fp_df_active, fp_df_inactive], ignore_index=True).sample(frac=1)
         fp_df_down.reset_index(drop=True, inplace=True)
         df_target = fp_df_down.copy()
@@ -115,19 +125,50 @@ def model_clf_grid_search(params_dict):
                     auc_score_test, acc_score_test, sens_score_test, spec_score_test, prec_score_test,
                     f1_score_test, confusion_test.tolist(), round(stop - start, 2)])
 
-    with open(f'{uniprot_id}_results.csv', 'a') as file:
+    with open(file_name, 'a') as file:
         writer = csv.writer(file, lineterminator='\n', delimiter=",")
         writer.writerow(results)
 
     return results
 
 
-df = pd.read_csv('params_grid_RFC.csv', sep=',')
+def create_results_file(param_grid, file_name):
+    import csv
+    head_params = list(param_grid.keys())
+    columns_train = ['auc_score_train', 'accuracy_score_train', 'sens_score_train',
+                     'spec_score_train', 'prec_score_train', 'confusion_m_train']
+    columns_test = ['auc_score_test', 'accuracy_score_test', 'sens_score_test',
+                    'spec_score_test', 'prec_score_test', 'f1_score_test', 'confusion_m_test', 'time']
+    columns_name = list(head_params)
+    columns_name.extend(columns_train)
+    columns_name.extend(columns_test)
+
+    with open(file_name, 'w') as file:
+        writer = csv.writer(file, lineterminator='\n', delimiter=",")
+        writer.writerow(columns_name)
+    return None
+
+### Inicio sript ###
+
+param_grid_all = {'n_estimators': np.arange(60, 220, 20),
+              'min_samples_split': np.arange(2, 10, 2),
+              'min_samples_leaf': np.arange(5, 30, 5),
+              'max_features': ['auto', 0.6, 0.7, 0.8, 0.9, 1],
+              'max_leaf_nodes': np.arange(40, 220, 20),
+              'oob_score': [True, False],
+              'max_samples': ['None', 0.7, 0.8, 0.9],
+              'criterion': ['gini', 'entropy']}
+
+
+df = pd.read_csv(f'params_grid_RFC.csv', sep=',')
 list_dict_params = df.to_dict('records')
 
 uniprot_id = 'P49841'
-fingerprint = 'maccs'
-seed = 1
+fingerprint = 'avalon_512_b'
 n_splits = 3
-X_train, X_test, y_train, y_test = carga_datos(uniprot_id)
+seed = 1
+resample_factor = 2
+X_train, X_test, y_train, y_test = carga_datos(uniprot_id, resample_factor=resample_factor)
 model = RandomForestClassifier()
+file_name = f'{uniprot_id}_RFC_grid_results_{fingerprint}_{n_splits}.csv'
+create_results_file(param_grid_all, file_name)
