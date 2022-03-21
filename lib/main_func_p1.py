@@ -256,7 +256,6 @@ def get_ligands(uniprot_data, verbose=True):
     Parte 3b. Quitar duplicados
     -----------------------------------------------------------------------------------------------------------------"""
     #  QUEDARSE CON EL menor valor (mayor actividad)
-    # todo > REVISAR ESTA PARTE DEL CODIGO
     s = value_df.duplicated(subset=['molecule_chembl_id'], keep=False)
     lista_iloc_duplicated = list(s[s].index)
     print(f'> Eliminado duplicados')
