@@ -51,7 +51,7 @@ def param_grid_mod(dict_params):
     return dict_params
 
 
-def model_clf_fp(model, fp_df, fp_list, uniprot_id, params_dict=None, seed=1, n_splits=5):
+def model_clf_fp(model, fp_df, fp_list, params_dict=None, seed=1, n_splits=5):
     import timeit
 
     columns = ['FINGERPRINT', 'AUC_train', 'acc_train', 'sen_train', 'spe_train', 'pre_train',
@@ -88,7 +88,7 @@ def model_clf_fp(model, fp_df, fp_list, uniprot_id, params_dict=None, seed=1, n_
         # Shuffle the indices
         skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
         # skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
-        i = 1
+
         for train_index, test_index in skf.split(X_train_fp, y_train):
             x_train_fold, x_test_fold = X_train_fp.iloc[train_index], X_train_fp.iloc[test_index]
             x_train_fold, x_test_fold = x_train_fold.tolist(), x_test_fold.tolist()
@@ -97,8 +97,7 @@ def model_clf_fp(model, fp_df, fp_list, uniprot_id, params_dict=None, seed=1, n_
             # Save the predicted label and prob of each fold
             pred_train[train_index] = model.predict(x_train_fold)
             prediction_prob_train[train_index] = model.predict_proba(x_train_fold)[:, 1]
-            # print(f'fp: {fp_name}, fold: {i} ok')
-            i += 1
+
 
         # score TRAIN
         auc_score_train = roc_auc_score(y_train, prediction_prob_train)

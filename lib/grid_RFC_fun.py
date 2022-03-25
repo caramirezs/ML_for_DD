@@ -39,7 +39,7 @@ def carga_datos(uniprot_id, resample_factor=0):
         elif len(fp_df_inactive) > len(fp_df_active):
             fp_df_inactive = fp_df_inactive.sample(n_sample)
 
-        fp_df_down = pd.concat([fp_df_active, fp_df_inactive], ignore_index=True).sample(frac=1)
+        fp_df_down = pd.concat([fp_df_active, fp_df_inactive], ignore_index=True).sample(frac=1, random_state=seed)
         fp_df_down.reset_index(drop=True, inplace=True)
         df_target = fp_df_down.copy()
 
@@ -170,5 +170,5 @@ seed = 1
 resample_factor = 2
 X_train, X_test, y_train, y_test = carga_datos(uniprot_id, resample_factor=resample_factor)
 model = RandomForestClassifier()
-file_name = f'{uniprot_id}_RFC_grid_results_{fingerprint}_{n_splits}.csv'
+file_name = f'{uniprot_id}_RFgrid_{fingerprint}_s{n_splits}_r{resample_factor}.csv'
 create_results_file(param_grid_all, file_name)

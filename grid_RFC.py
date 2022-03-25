@@ -12,7 +12,7 @@ if __name__ == '__main__':
         job = pool.map_async(model_clf_grid_search, args)
         job.get()
 stop = timeit.default_timer()
-print('ok', stop-start)
+print(f'tiempo transcurrido: {(stop-start)/60} minutos')
 
 # from lib.grid_RFC_fun import list_dict_params, param_grid_mod, model_clf_grid_search
 #
