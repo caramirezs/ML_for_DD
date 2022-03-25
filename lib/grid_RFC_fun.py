@@ -35,9 +35,9 @@ def carga_datos(uniprot_id, resample_factor=0):
         n_sample = round(new_ratio * min(len(fp_df_inactive), len(fp_df_active)))
 
         if len(fp_df_active) > len(fp_df_inactive):
-            fp_df_active = fp_df_active.sample(n_sample)
+            fp_df_active = fp_df_active.sample(n_sample, random_state=seed)
         elif len(fp_df_inactive) > len(fp_df_active):
-            fp_df_inactive = fp_df_inactive.sample(n_sample)
+            fp_df_inactive = fp_df_inactive.sample(n_sample, random_state=seed)
 
         fp_df_down = pd.concat([fp_df_active, fp_df_inactive], ignore_index=True).sample(frac=1, random_state=seed)
         fp_df_down.reset_index(drop=True, inplace=True)
@@ -164,8 +164,8 @@ df = pd.read_csv(f'params_grid_RFC.csv', sep=',')
 list_dict_params = df.to_dict('records')
 
 uniprot_id = 'P49841'
-fingerprint = 'avalon_512_b'
-n_splits = 3
+fingerprint = 'maccs'
+n_splits = 5
 seed = 1
 resample_factor = 2
 X_train, X_test, y_train, y_test = carga_datos(uniprot_id, resample_factor=resample_factor)
