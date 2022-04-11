@@ -1,5 +1,5 @@
 from importlib import reload
-from lib.main_func_p1 import path
+from lib.old_main_func_p1 import path
 
 import pandas as pd
 import numpy as np
@@ -9,9 +9,9 @@ uniprot_data = ['P22303', 'Non-IDG Family Targets']
 uniprot_id = uniprot_data[0]
 path_file = path(uniprot_id)
 
-import lib.main_func_p1
-reload(lib.main_func_p1)
-from lib.main_func_p1 import get_ligands
+import lib.old_main_func_p1
+reload(lib.old_main_func_p1)
+from lib.old_main_func_p1 import get_ligands
 
 activity_df = get_ligands(uniprot_data)
 

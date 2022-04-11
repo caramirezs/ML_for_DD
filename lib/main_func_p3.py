@@ -104,7 +104,6 @@ def create_fp_bv(df, method):
 
 def export_train_set_pickle(df, fp_list, verbose=False):
     import numpy as np
-
     if verbose: print('> Construyendo una forma molecular a partir de los SMILES')
     create_mol(df)
 
@@ -117,7 +116,7 @@ def export_train_set_pickle(df, fp_list, verbose=False):
     df_final['activity'] = np.zeros(len(df_final))
 
     if verbose: print('Mark every molecule as active (1.0) if target is active')
-    df_final.loc[df_final[df_final.activity_type == 'active'].index, 'activity'] = 1.0
+    df_final.loc[df_final[df_final.activity_type == 'Active'].index, 'activity'] = 1.0
     df_final.drop(['smiles', 'activity_type', 'mol'], axis=1, inplace=True)
     df_final.reset_index(drop=True, inplace=True)
 
