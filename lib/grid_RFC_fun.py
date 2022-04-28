@@ -164,10 +164,10 @@ df = pd.read_csv(f'params_grid_RFC.csv', sep=',')
 list_dict_params = df.to_dict('records')
 
 uniprot_id = 'P49841'
-fingerprint = 'maccs'
-n_splits = 5
+fingerprint = 'morgan2_c'
+n_splits = 10
 seed = 1
-resample_factor = 2
+resample_factor = 1.75
 X_train, X_test, y_train, y_test = carga_datos(uniprot_id, resample_factor=resample_factor)
 model = RandomForestClassifier()
 file_name = f'{uniprot_id}_RFgrid_{fingerprint}_s{n_splits}_r{resample_factor}.csv'

@@ -5,7 +5,7 @@ from lib.grid_RFC_fun import list_dict_params, param_grid_mod, model_clf_grid_se
 import timeit
 start = timeit.default_timer()
 
-args = [param_grid_mod(params_dict) for params_dict in list_dict_params[0:5]]
+args = [param_grid_mod(params_dict) for params_dict in list_dict_params]
 
 if __name__ == '__main__':
     with mp.Pool() as pool:
@@ -13,6 +13,7 @@ if __name__ == '__main__':
         job.get()
 stop = timeit.default_timer()
 print(f'tiempo transcurrido: {(stop-start)/60} minutos')
+
 
 # from lib.grid_RFC_fun import list_dict_params, param_grid_mod, model_clf_grid_search
 #

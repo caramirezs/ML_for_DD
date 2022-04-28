@@ -62,7 +62,7 @@ def get_info_target(uniprot_data, verbose=True):
     Parte 1. Cargar los datos
     -----------------------------------------------------------------------------------------------------------------"""
     try:
-        activity_df = pd.read_csv(f'data/activity_type_per_target/{uniprot_id}.csv')
+        activity_df = pd.read_csv(f'data/_activity_type_per_target/{uniprot_id}.csv')
     except FileNotFoundError:
         print(f'Actividad del target {uniprot_id} no encontrada, proceso finalizado')
         return None
@@ -78,14 +78,14 @@ def get_info_target(uniprot_data, verbose=True):
     ro5_df.reset_index(drop=True, inplace=True)
     ro5_df.to_csv(f'{path_file}_02_ligands_smiles_ADME_lipinski.csv', index=False)
     print(f'>>> SAVED: {uniprot_id}_02_ligands_smiles_ADME_lipinski.csv')
-    print('------------------------------------------------------------------')
+    # print('------------------------------------------------------------------')
     """-----------------------------------------------------------------------------------------------------------------
     Parte 3. Guardar archivo final: ['chembl_id_ligand', 'smiles', 'activity_type']
     -----------------------------------------------------------------------------------------------------------------"""
     activity_df = ro5_df[['chembl_id_ligand', 'smiles', 'activity_type']]
     print(f'>>> SAVED: {uniprot_id}_03_ligands_simles_activity_type.csv')
     activity_df.to_csv(f'{path_file}_03_ligands_smiles_activity_type.csv', index=False)
-    print(f'>>>>>> Resumen: total({len(activity_df)})')
+    print(f'>>>>>> Resumen>> total: {len(activity_df)}')
     print(activity_df.activity_type.value_counts())
     print('------------------------------------------------------------------')
     return activity_df

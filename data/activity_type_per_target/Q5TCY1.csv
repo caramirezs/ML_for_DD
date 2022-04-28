@@ -1,5 +1,0 @@
-"accession","pref_name","standar_type","chembl_id_ligand","canonical_smiles (Canonical)","Activity_type"
-"Q5TCY1","Tau-tubulin kinase 1","IC50","CHEMBL4438748","CN(C)c1ccc(C(=O)Nc2cccc(NC(=O)COc3ccc4c(=O)ccoc4c3)c2)cc1","Inactive"
-"Q5TCY1","Tau-tubulin kinase 1","IC50","CHEMBL3745885","Cn1c(=O)c(S(=O)(=O)c2ccc(F)cc2F)cc2cnc(Nc3ccc4[nH]ccc4c3)nc21","Inactive"
-"Q5TCY1","Tau-tubulin kinase 1","IC50","CHEMBL278041","Oc1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1","Inactive"
-"Q5TCY1","Tau-tubulin kinase 1","IC50","CHEMBL4528881","CC1(N)CCC(Nc2ccn3ncnc(Nc4cc(O)cc(Br)c4)c23)CC1","Intermediate"

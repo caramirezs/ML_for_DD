@@ -4,7 +4,7 @@ import pandas as pd
 
 # sklearn:
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, KFold
 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score
@@ -86,10 +86,11 @@ def model_clf_fp(model, fp_df, fp_list, params_dict=None, seed=1, n_splits=5):
         pred_train = -1 * np.ones(len(X_train_fp))
         prediction_prob_train = -1 * np.ones(len(X_train_fp))
         # Shuffle the indices
-        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-        # skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+        # skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+        skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
 
         for train_index, test_index in skf.split(X_train_fp, y_train):
+            #Training
             x_train_fold, x_test_fold = X_train_fp.iloc[train_index], X_train_fp.iloc[test_index]
             x_train_fold, x_test_fold = x_train_fold.tolist(), x_test_fold.tolist()
             y_train_fold, y_test_fold = y_train[train_index], y_train[test_index]
