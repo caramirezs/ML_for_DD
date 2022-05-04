@@ -225,9 +225,9 @@ def model_clf(model, fp_df, fp_name, uniprot_id, params_dict=None, seed=1, n_spl
     print('Results %s:' % str(model).split('(')[0],
           '\n-------------------------------------')
     print(classification_report(y_test, pred_test))
-    df_model = pd.DataFrame(list_results, columns=['Metric', 'Train', 'Test'])
+    df_results_model = pd.DataFrame(list_results, columns=['Metric', 'Train', 'Test'])
 
-    return df_model, results_ROC
+    return df_results_model, results_ROC
 
 
 def plot_ROC_curve(metrics_ROC, metrics_ROC_name, model_name):
