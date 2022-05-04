@@ -35,17 +35,19 @@ def df_rule_of_five(df):
 
 
 def get_lipinski_Ro5(df):
-    print('> Recuperando ADME y aplicando la regla de los 5')
+    print('> Recuperando ADME y aplicando la regla de Lipinski (RoF)')
     rule5_prop_df = df.apply(df_rule_of_five, axis=1)
     rule5_prop_df.columns = ['MW', 'HBA', 'HBD', 'LogP', 'rule_of_five_conform']
     df = df.join(rule5_prop_df)
     filtered_df = df[df['rule_of_five_conform'] == 'yes']
+    filtered_NO_df = df[df['rule_of_five_conform'] == 'no']
     # Info about data
     print('>> # compuestos en data set: ', len(df))
     print(">> # compuestos que cumplen Lipinski's rule of five:", len(filtered_df))
-    print(">> # compuetos que NO cumplen Lipinski's rule of five:", (len(df) - len(filtered_df)))
+    print(f">> # compuetos que NO cumplen Lipinski's rule of five: {len(filtered_NO_df)} "
+          f"({round(100*len(filtered_NO_df)/len(df),1)}%)")
     print(">>> Filtrando compuestos que cumplen Lipinski's rule of five")
-    return filtered_df
+    return filtered_df, filtered_NO_df
 
 
 def get_info_target(uniprot_data, verbose=True):
@@ -73,10 +75,13 @@ def get_info_target(uniprot_data, verbose=True):
     """-----------------------------------------------------------------------------------------------------------------
     Parte 2. Lipinski Ro5
     -----------------------------------------------------------------------------------------------------------------"""
-    ro5_df = get_lipinski_Ro5(smiles_df)
+    ro5_df, no_rof_df = get_lipinski_Ro5(smiles_df)
     ro5_df = ro5_df[['chembl_id_ligand', 'smiles', 'MW', 'HBA', 'HBD', 'LogP', 'activity_type']]
+    no_rof_df = no_rof_df[['chembl_id_ligand', 'smiles', 'MW', 'HBA', 'HBD', 'LogP', 'activity_type']]
     ro5_df.reset_index(drop=True, inplace=True)
+    no_rof_df.reset_index(drop=True, inplace=True)
     ro5_df.to_csv(f'{path_file}_02_ligands_smiles_ADME_lipinski.csv', index=False)
+    no_rof_df.to_csv(f'{path_file}_02_ligands_smiles_NO_ADME_lipinski.csv', index=False)
     print(f'>>> SAVED: {uniprot_id}_02_ligands_smiles_ADME_lipinski.csv')
     # print('------------------------------------------------------------------')
     """-----------------------------------------------------------------------------------------------------------------
@@ -85,7 +90,7 @@ def get_info_target(uniprot_data, verbose=True):
     activity_df = ro5_df[['chembl_id_ligand', 'smiles', 'activity_type']]
     print(f'>>> SAVED: {uniprot_id}_03_ligands_simles_activity_type.csv')
     activity_df.to_csv(f'{path_file}_03_ligands_smiles_activity_type.csv', index=False)
-    print(f'>>>>>> Resumen>> total: {len(activity_df)}')
+    print(f'>>>> Total compuestos (RoF): {len(activity_df)}')
     print(activity_df.activity_type.value_counts())
     print('------------------------------------------------------------------')
     return activity_df

@@ -17,6 +17,26 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
 
+def resample_set(fp_df, ratio=0):
+    seed = 1
+    if ratio == 0:
+        return fp_df
+    else:
+        old_ratio = round(list(fp_df.activity.value_counts())[0] / list(fp_df.activity.value_counts())[1], 2)
+        fp_df_active = fp_df[fp_df.activity == 1]
+        fp_df_inactive = fp_df[fp_df.activity == 0]
+        # resample
+        new_ratio = min(old_ratio, ratio)
+        n_sample = round(new_ratio * min(len(fp_df_inactive), len(fp_df_active)))
+        if len(fp_df_active) > len(fp_df_inactive):
+            fp_df_active = fp_df_active.sample(n_sample, random_state=seed)
+        elif len(fp_df_inactive) > len(fp_df_active):
+            fp_df_inactive = fp_df_inactive.sample(n_sample, random_state=seed)
+        fp_df_down = pd.concat([fp_df_active, fp_df_inactive], ignore_index=True).sample(frac=1, random_state=seed)
+        fp_df_down.reset_index(drop=True, inplace=True)
+        return fp_df_down
+
+
 def create_param_grid(param_grid, file_name):
     results = list()
     for i_0 in param_grid[list(param_grid)[0]]:
@@ -51,6 +71,7 @@ def param_grid_mod(dict_params):
     return dict_params
 
 
+# Depreciado, no se compara con otras fingerprinys
 def model_clf_fp(model, fp_df, fp_list, params_dict=None, seed=1, n_splits=5):
     import timeit
 
@@ -90,7 +111,7 @@ def model_clf_fp(model, fp_df, fp_list, params_dict=None, seed=1, n_splits=5):
         skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
 
         for train_index, test_index in skf.split(X_train_fp, y_train):
-            #Training
+            # Training
             x_train_fold, x_test_fold = X_train_fp.iloc[train_index], X_train_fp.iloc[test_index]
             x_train_fold, x_test_fold = x_train_fold.tolist(), x_test_fold.tolist()
             y_train_fold, y_test_fold = y_train[train_index], y_train[test_index]
@@ -98,7 +119,6 @@ def model_clf_fp(model, fp_df, fp_list, params_dict=None, seed=1, n_splits=5):
             # Save the predicted label and prob of each fold
             pred_train[train_index] = model.predict(x_train_fold)
             prediction_prob_train[train_index] = model.predict_proba(x_train_fold)[:, 1]
-
 
         # score TRAIN
         auc_score_train = roc_auc_score(y_train, prediction_prob_train)
@@ -175,8 +195,8 @@ def model_clf(model, fp_df, fp_name, uniprot_id, params_dict=None, seed=1, n_spl
     prediction_prob_train = -1 * np.ones(len(X_train))
 
     # Shuffle the indices
-    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-    # skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    # skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
     for train_index, test_index in skf.split(X_train, y_train):
         x_train_fold, x_test_fold = X_train.iloc[train_index], X_train.iloc[test_index]
         x_train_fold, x_test_fold = x_train_fold.tolist(), x_test_fold.tolist()

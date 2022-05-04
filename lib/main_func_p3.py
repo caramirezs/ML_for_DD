@@ -13,9 +13,10 @@ all_fp_list = ['maccs',
                'atom_pairs_b', 'topological_torsions_b',
                'avalon_512_b', 'avalon_1024_b', 'avalon_512_c', 'avalon_1024_c']
 
-
 # Finger prints excluidas porque toman mucho timepo
 #  'atom_pairs_c', 'topological_torsions_c
+
+
 
 def calculate_fp(mol, method='maccs'):
     # mol = Chem molecule object

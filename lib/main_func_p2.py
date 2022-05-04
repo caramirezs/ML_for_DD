@@ -28,7 +28,7 @@ def get_properties_stats(data_df):
     return data_stats
 
 
-def plot_radarplot(uniprot, data_stats):
+def plot_radarplot(uniprot, data_stats, nombre):
     """
     Function that plots a radar plot based on the mean and std of 4 physicochemical properties (HBD, HBA, MW and LogP).
 
@@ -140,7 +140,7 @@ def plot_radarplot(uniprot, data_stats):
     plt.tight_layout()
 
     # Save plot - use bbox_inches to include text boxes:
-    output_path = f'{path_file}_RadarPlot'
+    output_path = f'{path_file}_RadarPlot_{nombre}'
     plt.savefig(output_path, dpi=300, bbox_inches="tight", transparent=True)
 
     # Show polar plot
