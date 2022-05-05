@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 # sklearn:
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, KFold
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score
@@ -29,7 +29,7 @@ def carga_datos(uniprot_id, resample_factor=0):
         ratio = len(fp_df_inactive) / len(fp_df_active)
 
         if ratio < 1:
-            ratio = 1/ratio
+            ratio = 1 / ratio
 
         new_ratio = min(ratio, resample_factor)
         n_sample = round(new_ratio * min(len(fp_df_inactive), len(fp_df_active)))
@@ -86,9 +86,9 @@ def model_clf_grid_search(params_dict):
 
     model.set_params(**params_dict)
 
-    # N-SPLITS - 80% train set
     # Shuffle the indices
-    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    # skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    skf = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
     for train_index, test_index in skf.split(X_train, y_train):
         x_train_fold, x_test_fold = X_train.iloc[train_index], X_train.iloc[test_index]
         x_train_fold, x_test_fold = x_train_fold.tolist(), x_test_fold.tolist()
@@ -148,27 +148,33 @@ def create_results_file(param_grid, file_name):
         writer.writerow(columns_name)
     return None
 
-### Inicio sript ###
-
 param_grid_all = {'n_estimators': np.arange(60, 220, 20),
-              'min_samples_split': np.arange(2, 10, 2),
-              'min_samples_leaf': np.arange(5, 30, 5),
-              'max_features': ['auto', 0.6, 0.7, 0.8, 0.9, 1],
-              'max_leaf_nodes': np.arange(40, 220, 20),
-              'oob_score': [True, False],
-              'max_samples': ['None', 0.7, 0.8, 0.9],
-              'criterion': ['gini', 'entropy']}
+                  'min_samples_split': np.arange(2, 10, 2),
+                  'min_samples_leaf': np.arange(5, 30, 5),
+                  'max_features': ['auto', 0.6, 0.7, 0.8, 0.9, 1],
+                  'max_leaf_nodes': np.arange(40, 220, 20),
+                  'oob_score': [True, False],
+                  'max_samples': ['None', 0.7, 0.8, 0.9],
+                  'criterion': ['gini', 'entropy']}
 
+# Crear la grilla
+# from lib.main_func_p4_CLF_models import create_param_grid
+# create_param_grid(param_grid_all, 'params_grid_RFC.csv')
 
 df = pd.read_csv(f'params_grid_RFC.csv', sep=',')
 list_dict_params = df.to_dict('records')
 
+
+### Inicio sript ###
+
 uniprot_id = 'P49841'
 fingerprint = 'morgan2_c'
-n_splits = 10
+n_splits = 5
 seed = 1
-resample_factor = 1.75
+resample_factor = 0 #0: No resample
+
 X_train, X_test, y_train, y_test = carga_datos(uniprot_id, resample_factor=resample_factor)
 model = RandomForestClassifier()
+
 file_name = f'{uniprot_id}_RFgrid_{fingerprint}_s{n_splits}_r{resample_factor}.csv'
 create_results_file(param_grid_all, file_name)

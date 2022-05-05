@@ -3,6 +3,7 @@ import os
 
 from lib.grid_RFC_fun import list_dict_params, param_grid_mod, model_clf_grid_search
 import timeit
+
 start = timeit.default_timer()
 
 args = [param_grid_mod(params_dict) for params_dict in list_dict_params]
