@@ -1,0 +1,5 @@
+chembl_id_ligand,smiles,MW,HBA,HBD,LogP,activity_type
+CHEMBL4438748,CN(C)c1ccc(C(=O)Nc2cccc(NC(=O)COc3ccc4c(=O)ccoc4c3)c2)cc1,457.16377083599997,6,2,4.128800000000003,Inactive
+CHEMBL3745885,Cn1c(=O)c(S(=O)(=O)c2ccc(F)cc2F)cc2cnc(Nc3ccc4[nH]ccc4c3)nc21,467.0863667800001,7,2,3.6644000000000014,Inactive
+CHEMBL278041,Oc1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1,331.112090288,3,2,4.650400000000003,Inactive
+CHEMBL4528881,CC1(N)CCC(Nc2ccn3ncnc(Nc4cc(O)cc(Br)c4)c23)CC1,430.111671456,7,4,4.012900000000002,Intermediate

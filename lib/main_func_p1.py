@@ -12,6 +12,18 @@ def path(uniprot_id):
     return f'./data/{uniprot_id}/{uniprot_id}'
 
 
+## TIMER ##
+def timer(tick=None):
+    import time
+    if not tick:
+        tick = time.time()
+        return tick
+    elif tick:
+        thour, temp_sec = divmod((time.time() - tick), 3600)
+        tmin, tsec = divmod(temp_sec, 60)
+        print(f'{int(thour)} hours, {int(tmin)} minutes, {round(tsec, 1)} seconds.')
+
+
 def df_rule_of_five(df):
     from rdkit import Chem
     from rdkit.Chem import Descriptors
@@ -45,19 +57,18 @@ def get_lipinski_Ro5(df):
     print('>> # compuestos en data set: ', len(df))
     print(">> # compuestos que cumplen Lipinski's rule of five:", len(filtered_df))
     print(f">> # compuetos que NO cumplen Lipinski's rule of five: {len(filtered_NO_df)} "
-          f"({round(100*len(filtered_NO_df)/len(df),1)}%)")
+          f"({round(100 * len(filtered_NO_df) / len(df), 1)}%)")
     print(">>> Filtrando compuestos que cumplen Lipinski's rule of five")
     return filtered_df, filtered_NO_df
 
 
-def get_info_target(uniprot_data, verbose=True):
+def get_info_target(uniprot_id, verbose=True):
     """
     :param uniprot_data: [uniprot_id, group]
     :return:
     """
     # Import dependences
     import pandas as pd
-    uniprot_id = uniprot_data[0]
     path_file = path(uniprot_id)
 
     """-----------------------------------------------------------------------------------------------------------------
@@ -68,7 +79,8 @@ def get_info_target(uniprot_data, verbose=True):
     except FileNotFoundError:
         print(f'Actividad del target {uniprot_id} no encontrada, proceso finalizado')
         return None
-    activity_df = activity_df.rename(columns={'canonical_smiles (Canonical)': 'smiles', 'Activity_type': 'activity_type'})
+    activity_df = activity_df.rename(
+        columns={'canonical_smiles (Canonical)': 'smiles', 'Activity_type': 'activity_type'})
     smiles_df = activity_df[['chembl_id_ligand', 'smiles', 'activity_type']]
     smiles_df.to_csv(f'{path_file}_01_ligands_smiles.csv', index=False)
 

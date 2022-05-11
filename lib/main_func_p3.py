@@ -13,9 +13,9 @@ all_fp_list = ['maccs',
                'atom_pairs_b', 'topological_torsions_b',
                'avalon_512_b', 'avalon_1024_b', 'avalon_512_c', 'avalon_1024_c']
 
+
 # Finger prints excluidas porque toman mucho timepo
 #  'atom_pairs_c', 'topological_torsions_c
-
 
 
 def calculate_fp(mol, method='maccs'):
@@ -89,6 +89,12 @@ def calculate_fp(mol, method='maccs'):
         return pyAvalonTools.GetAvalonCountFP(mol, 1024)
 
 
+def calculate_onefp(df, fp_name):
+    from rdkit import Chem
+    df['mol'] = df.smiles.map(lambda smile: Chem.MolFromSmiles(smile))
+    df[fp_name] = df.mol.apply(calculate_fp, args=[fp_name])
+
+
 def create_mol(df):
     # Construct a molecule from a SMILES string
     # Generate mol column: Returns a Mol object, None on failure.
@@ -103,20 +109,22 @@ def create_fp_bv(df, method):
     return None
 
 
-def export_train_set_pickle(df, fp_list, verbose=False):
+def export_dataset(df, fp_list, verbose=False):
     import numpy as np
     if verbose: print('> Construyendo una forma molecular a partir de los SMILES')
     create_mol(df)
 
-    if verbose: print('> Creando las fingerprint')
+    if verbose: print('> Creating fingerprints')
     for fp in fp_list:
         create_fp_bv(df, fp)
+
     df_final = df.copy()
 
     if verbose: print('Add column for activity_type')
     df_final['activity'] = np.zeros(len(df_final))
 
     if verbose: print('Mark every molecule as active (1.0) if target is active')
+
     df_final.loc[df_final[df_final.activity_type == 'Active'].index, 'activity'] = 1.0
     df_final.drop(['smiles', 'activity_type', 'mol'], axis=1, inplace=True)
     df_final.reset_index(drop=True, inplace=True)

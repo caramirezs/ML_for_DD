@@ -1,0 +1,2 @@
+chembl_id_ligand,smiles,activity_type
+CHEMBL1669092,CC(COc1ccc(/C=C\c2ccccc2)cc1)[N+](C)(C)C,Intermediate

@@ -1,4 +1,4 @@
-from lib.old_main_func_p1 import path
+from old.old_main_func_p1 import path
 
 
 def get_properties_stats(data_df):
@@ -28,7 +28,7 @@ def get_properties_stats(data_df):
     return data_stats
 
 
-def plot_radarplot(uniprot, data_stats, nombre):
+def plot_radarplot(uniprot_id, data_stats, nombre):
     """
     Function that plots a radar plot based on the mean and std of 4 physicochemical properties (HBD, HBA, MW and LogP).
 
@@ -43,7 +43,7 @@ def plot_radarplot(uniprot, data_stats, nombre):
     import matplotlib.pyplot as plt
     # Get data points for lines
 
-    path_file = path(uniprot)
+    path_file = path(uniprot_id)
 
     std_1 = [data_stats["mean"]["HBD"] + data_stats["std"]["HBD"],
              (data_stats["mean"]["HBA"]/2) + (data_stats["std"]["HBA"]/2),
