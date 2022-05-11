@@ -140,7 +140,7 @@ def plot_radarplot(uniprot_id, data_stats, nombre):
     plt.tight_layout()
 
     # Save plot - use bbox_inches to include text boxes:
-    output_path = f'{path_file}_RadarPlot_{nombre}'
+    output_path = f'{path_file}_{nombre}_RadarPlot'
     plt.savefig(output_path, dpi=300, bbox_inches="tight", transparent=True)
 
     # Show polar plot
