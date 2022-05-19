@@ -21,7 +21,12 @@ def timer(tick=None):
     elif tick:
         thour, temp_sec = divmod((time.time() - tick), 3600)
         tmin, tsec = divmod(temp_sec, 60)
-        print(f'{int(thour)} hours, {int(tmin)} minutes, {round(tsec, 1)} seconds.')
+        if int(thour) > 0:
+            return f'{int(thour)} hours, {int(tmin)} minutes, {round(tsec, 1)} seconds.'
+        elif int(tmin) > 0:
+            return f'{int(tmin)} minutes, {round(tsec, 1)} seconds.'
+        else:
+            return f'{round(tsec, 1)} seconds.'
 
 
 def df_rule_of_five(df):

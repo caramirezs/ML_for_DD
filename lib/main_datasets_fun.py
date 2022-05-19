@@ -6,7 +6,8 @@ import pandas as pd
 
 
 def uniprot_id_datasets(uniprot_id, fp_name='morgan2_c', seed=142857):
-    print(f'Proceso iniciado, uniprot_id: {uniprot_id}')
+    print('---------------------------------------------------------')
+    print(f'Proceso iniciado, uniprot_id: {uniprot_id}\n')
     path_file = path(uniprot_id)
     try:
         with open(f'{path_file}_03_ligands_smiles_activity_type.csv') as f:
