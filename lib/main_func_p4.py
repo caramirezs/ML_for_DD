@@ -196,6 +196,8 @@ def modelXGBoost_fit_scores(xgb_clf, fp_name, df_set, df_valid,
         ori_compounds_len = len(df_set)
         df_set_rsmp = resampling_set(df_set, mode=resample_mode, ratio=resample_factor)
         print(f'{resample_mode} - {resample_factor}: {ori_compounds_len} to {len(df_set_rsmp)}')
+    else:
+        df_set_rsmp = df_set
 
     X_set, y_set = df_set_rsmp[fp_name], df_set_rsmp['activity']
     X_train, X_test, y_train, y_test = train_test_split(X_set, y_set, test_size=0.15,

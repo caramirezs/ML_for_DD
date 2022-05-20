@@ -42,9 +42,12 @@ def df_rule_of_five(df):
     HBA = Descriptors.NumHAcceptors(m)
     HBD = Descriptors.NumHDonors(m)
     LogP = Descriptors.MolLogP(m)
+    # Reflectividad molar
 
     # Rule of five conditions
     conditions = [MW <= 500, HBA <= 10, HBD <= 5, LogP <= 5]
+    # conditions =  [60 <= MW <= 500, 20<= HBA + HBD <= 70,
+    #               -0.4 <= LogP <= 5.6 , 40 <= RM <= 130]
 
     # Create pandas row for conditions results with values and information whether rule of five is violated
     return pd.Series([MW, HBA, HBD, LogP, 'yes']) if conditions.count(True) >= 3 else pd.Series(
