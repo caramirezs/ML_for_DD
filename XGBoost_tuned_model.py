@@ -10,8 +10,10 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P27338'
-name_grid_file = 'grid_results/P22303_20220517111320_BayesSearchCV_XGBoots_f1_weighted.xlsx'
+uniprot_id = 'P56817'
+excel_name = 'P56817_20220603091644_BayesSearchCV_XGBoots_balanced_accuracy_rf4'
+name_grid_file = f'grid_results/{excel_name}.xlsx'
+metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
 
 path_file = path(uniprot_id)
 
@@ -39,6 +41,7 @@ df_train = pd.read_pickle(f'{path_file}_dataset_train')
 df_valid = pd.read_pickle(f'{path_file}_dataset_valid')
 
 params_dict_len = int(0.8*len(df_grid_results))
+params_dict_len = 500
 
 tick_main = timer()
 
@@ -64,10 +67,6 @@ for i, params_dict in enumerate(df_grid_results['params'].iloc[:params_dict_len]
                           'eval_metric': eval_metric, 'early_stopping_rounds': 10}
     params_dict.update(default_params_xgb)
 
-    try:
-        del xgb_clf
-    except:
-        pass
     xgb_clf = xgb.XGBClassifier(**params_dict)
 
     # Cross validation XGBoost
@@ -100,6 +99,6 @@ top_scores.sort_values(by=['calibration_score'], inplace=True)
 
 # Save top_records
 now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-excel_name = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier.xlsx'
+excel_name = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
 top_scores.to_excel(excel_name, sheet_name=uniprot_id, index=False)
 print(f'file {excel_name} save')

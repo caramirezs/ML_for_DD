@@ -39,6 +39,6 @@ def uniprot_id_datasets(uniprot_id, fp_name='morgan2_c', seed=142857):
     fp_df_test.reset_index(drop=True, inplace=True)
     fp_df_train.to_pickle(f'{path_file}_dataset_train')
     print(f'>>> SAVED: {path_file}_dataset_train, compounds: {len(fp_df_train)}')
-    fp_df_test.to_pickle(f'{path_file}_dataset_test')
-    print(f'>>> SAVED: {path_file}_dataset_test, compounds: {len(fp_df_test)}')
+    fp_df_test.to_pickle(f'{path_file}_dataset_valid')
+    print(f'>>> SAVED: {path_file}_dataset_valid, compounds: {len(fp_df_test)}')
     return None
