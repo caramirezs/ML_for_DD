@@ -285,6 +285,7 @@ def plot_calibration_curve(df_list, df_list_name, model_name,
         else:
             plt.savefig(f'{path_file}_IMG05_calibration_curve.png', bbox_inches='tight')
     plt.show()
+    plt.close()
     return None
 
 
@@ -317,7 +318,7 @@ def plot_probability_curve(df, uniprot_id, hue_order=None,
               fontsize=16, fontdict={"weight": "bold"})
     if save_fig:
         if name_mod is not None:
-            plt.savefig(f'{path_file}_IMG06_compounds_probability_{name_mod}.png', dpi=300, bbox_inches='tight')
+            plt.savefig(f'{path_file}_IMG06_compounds_probability_{name_mod}.png', dpi=150, bbox_inches='tight')
         else:
-            plt.savefig(f'{path_file}_IMG06_compounds_probability.png', dpi=300, bbox_inches='tight')
+            plt.savefig(f'{path_file}_IMG06_compounds_probability.png', dpi=150, bbox_inches='tight')
     plt.show()
