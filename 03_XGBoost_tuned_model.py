@@ -11,7 +11,7 @@ import xgboost as xgb
 #####################################
 # proteina (uniprot_ID)
 uniprot_id = 'P56817'
-excel_name = 'P56817_20220603091644_BayesSearchCV_XGBoots_balanced_accuracy_rf4'
+excel_name = 'P56817_20220603091412_BayesSearchCV_XGBoots_f1_weighted_rf4'
 name_grid_file = f'grid_results/{excel_name}.xlsx'
 metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
 
