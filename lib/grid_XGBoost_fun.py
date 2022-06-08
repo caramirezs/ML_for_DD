@@ -13,15 +13,11 @@ from skopt import BayesSearchCV
 # calllbacks funtion
 from skopt.callbacks import DeadlineStopper, DeltaYStopper
 
-
 ####
 # https://scikit-learn.org/stable/modules/model_evaluation.html
 # from sklearn import metrics
 # print(sorted(metrics.SCORERS.keys()))
 ####
-import numpy as np
-print(np.linspace(0.85, 1.15, 11))
-
 
 def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
                           scoring='f1_weighted', resample_factor=0, resample_mode='under_sampling'):
@@ -42,7 +38,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     negative_class = max(list(df_set['activity'].value_counts()))
     positive_class = min(list(df_set['activity'].value_counts()))
     spw = round(negative_class / positive_class, 2)  # Mayority / minority
-    if spw > 2:
+    if spw > 3:
         list_spw = [1.0, 1.5, 2.0, spw, round(0.85*spw, 2), round(0.88*spw, 2), round(0.91*spw, 2), round(0.94*spw),
                     round(0.97*spw, 2), round(1.03*spw, 2), round(1.06*spw, 2), round(1.09*spw),
                     round(1.12*spw, 2), round(1.15*spw, 2)]
@@ -58,7 +54,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
         df_set_rsmp = resampling_set(df_set, mode=resample_mode, ratio=resample_factor)
         print(f'{resample_mode} - {resample_factor}: {ori_compounds_len} to {len(df_set_rsmp)}')
     else:
-        df_set_rsmp = df_set
+        df_set_rsmp = df_set.copy()
 
     # Separate attributes and tags
     X_set, y_set = df_set_rsmp[fp_name], df_set_rsmp['activity']
@@ -75,7 +71,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
         # Tree boster parameter. Minimum loss reduction required to make a further partition on a leaf node of the tree
         'gamma': [0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0, 1.5, 2.0],
         # Tree boster parameter. L2 regularization term on weights.
-        'lambda': [1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.5, 3, 4, ],
+        'lambda': [1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.5, 3, 4],
         # Tree boster parameter. Step size shrinkage used in update to prevents overfitting
         'learning_rate': [0.05, 0.1, 0.2, 0.25, 0.28, 0.3, 0.32, 0.35, 0.4, 0.45, 0.5],
         # Tree boster parameter. Maximum depth of a tree.
