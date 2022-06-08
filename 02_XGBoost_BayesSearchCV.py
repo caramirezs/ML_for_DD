@@ -13,4 +13,4 @@ gpu_id = 1
 
 uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
 BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter, gpu_id=gpu_id,
-                      scoring='precision', resample_factor=3, resample_mode='under_sampling')
+                      scoring='precision', resample_factor=4, resample_mode='under_sampling')
