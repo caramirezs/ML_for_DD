@@ -10,8 +10,8 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P56817'
-excel_name = 'P56817_20220603091412_BayesSearchCV_XGBoots_f1_weighted_rf4'
+uniprot_id = 'P36544'
+excel_name = 'P36544_20220608111724_BayesSearchCV_XGBoots_f1_weighted_rf5'
 name_grid_file = f'grid_results/{excel_name}.xlsx'
 metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
 
@@ -74,7 +74,7 @@ for i, params_dict in enumerate(df_grid_results['params'].iloc[:params_dict_len]
 
     # Train model and evaluating scores (train / validation)
     xgb_clf, scores_train, scores_valid = modelXGBoost_fit_scores(xgb_clf, fp_name, df_train, df_valid,
-                                                                  resample_factor=0, resample_mode='under_sampling')
+                                                                  resample_factor=5, resample_mode='over_sampling')
 
     new_row = [f'modelID_{i}', params_dict_Orderer, scores_train[0], scores_valid[0], scores_train[1], scores_valid[1],
                scores_train[2], scores_valid[2], scores_train[3], scores_valid[3], scores_train[4], scores_valid[4],
