@@ -1,8 +1,9 @@
-from lib.main_func_p1 import path, timer
+from lib.main_func_p1 import timer, path
 from lib.main_func_p4 import modelXGBoost_fit_scores
 from lib.main_func_p4 import brier_score
 from datetime import datetime
 from collections import OrderedDict
+
 import pandas as pd
 
 # XGBoost library
@@ -10,16 +11,21 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P36544'
-excel_name = 'P36544_20220608111724_BayesSearchCV_XGBoots_f1_weighted_rf5'
-name_grid_file = f'grid_results/{excel_name}.xlsx'
-metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
+uniprot_id = 'P56817'
 
 path_file = path(uniprot_id)
 
 # Parametros
-seed = 142857
+seed = 142854
 fp_name = 'morgan2_c'
+
+
+excel_name = 'P56817_20220611144429_BayesSearchCV_XGBoots_precision_rf3'
+resample_factor = int(str.split(excel_name,'_')[-1][2:])
+resample_mode = 'under_sampling'
+
+name_grid_file = f'grid_results/{excel_name}.xlsx'
+metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
 
 # Cargar archivo / eliminar columnas innecesarias
 df_ori = pd.read_excel(name_grid_file, sheet_name=0)
@@ -60,7 +66,6 @@ print(f'Proceso iniciado, proteina ID {uniprot_id}')
 for i, params_dict in enumerate(df_grid_results['params'].iloc[:params_dict_len]):
     eval_metric = ['error', 'auc']
     tick = timer()
-    params_dict_Orderer = params_dict
     params_dict = dict(eval(params_dict))
     default_params_xgb = {'booster': 'gbtree', 'tree_method': 'gpu_hist',
                           'objective': 'binary:logistic', 'grow_policy': 'depthwise',
@@ -74,9 +79,10 @@ for i, params_dict in enumerate(df_grid_results['params'].iloc[:params_dict_len]
 
     # Train model and evaluating scores (train / validation)
     xgb_clf, scores_train, scores_valid = modelXGBoost_fit_scores(xgb_clf, fp_name, df_train, df_valid,
-                                                                  resample_factor=5, resample_mode='over_sampling')
+                                                                  resample_factor=resample_factor,
+                                                                  resample_mode=resample_mode)
 
-    new_row = [f'modelID_{i}', params_dict_Orderer, scores_train[0], scores_valid[0], scores_train[1], scores_valid[1],
+    new_row = [f'modelID_{i}', params_dict, scores_train[0], scores_valid[0], scores_train[1], scores_valid[1],
                scores_train[2], scores_valid[2], scores_train[3], scores_valid[3], scores_train[4], scores_valid[4],
                scores_train[5], scores_valid[5], scores_train[6], scores_valid[6]]
     new_row_list.append(new_row)
