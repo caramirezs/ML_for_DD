@@ -1,10 +1,16 @@
 nvidia-smi dmon
+P42336
 
 Homelander 
-gpu_0		screen -r 1603240		P56817	precision
-gpu_1		screen -r 4843			P56817	balanced_accuracy
-gpu_2		screen -r 4925			P56817	jaccard
+gpu_0		screen -r 1603240		precision
+gpu_1		screen -r 4843			balanced_accuracy
+gpu_2		screen -r 4925			jaccard
 
 Arrakis 
-gpu_0		screen -r 3470			P56817	accuracy
-gpu_1		screen -r 4241			P56817	f1_weighted
+gpu_0		screen -r 3914			accuracy
+gpu_1		screen -r 6365			f1_weighted
+
+bloque de texto
+ejecutar: sbatch nombre archivo
+squeue -> corriendo y el tiempo
+maximo 5 trabajos
