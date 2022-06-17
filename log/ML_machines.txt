@@ -1,15 +1,16 @@
-nvidia-smi dmon
-P42336
+P22303
+Arrakis
+gpu_0		screen -r 3914			balanced_accuracy
+gpu_1		screen -r 6365			accuracy
 
-Homelander 
+Homelander
 gpu_0		screen -r 1603240		precision
-gpu_1		screen -r 4843			balanced_accuracy
-gpu_2		screen -r 4925			jaccard
+gpu_1		screen -r 4843			jaccard
+gpu_2		screen -r 4925			f1_weighted
 
-Arrakis 
-gpu_0		screen -r 3914			accuracy
-gpu_1		screen -r 6365			f1_weighted
 
+nvidia-smi dmon
+##########################################################
 bloque de texto
 ejecutar: sbatch nombre archivo
 squeue -> corriendo y el tiempo
