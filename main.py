@@ -16,8 +16,5 @@ def read_root():
 
 @app.post("/modelo")
 def update_item(params: Params):
-    df = test_concepto(params.smiles)
-    result = df.to_json(orient="table")
-    parsed = json.loads(result)
-    result = json.dumps(parsed, indent=4)
-    return parsed
+    result = test_concepto(params.smiles)
+    return result

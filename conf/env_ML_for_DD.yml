@@ -22,9 +22,12 @@ dependencies:
   - pypdb
   - multiprocess
   - openpyxl
+  - tensorflow
+  - catboost
+  - xgboost
   - pip:
     - nbconvert==5.4.1 
-    - tensorflow
-    - catboost
-    - xgboost
+    
+    
+    
     

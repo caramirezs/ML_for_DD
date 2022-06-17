@@ -1,7 +1,7 @@
 from lib.main_func_p3 import calculate_onefp
 import numpy as np
 import pandas as pd
-import os
+import os, json
 
 #XGBoost library
 import xgboost as xgb
@@ -43,7 +43,9 @@ def test_concepto(lista_smiles):
         df[f'{uniprot_id}_prediction'] = pred_test
 
     df = df.drop([fp_name], axis=1)
-    return df
+    result = df.to_json(orient="table")
+    parsed = json.loads(result)
+    return parsed['data']
 
 # lista_smiles = ["CCC(C)(C)n1c(nnn1)[C@H](c2cc3ccc(c(c3[nH]c2=O)C)C)[NH+]4CCN(CC4)c5ccc(cc5)[N+](=O)[O-]",
 #     "Cc1ccc(cc1)NC(=O)CN2c3ccccc3[C@@]4(C2=O)[C@H]5[C@@H]([C@@H]([NH2+]4)CCSC)C(=O)N(C5=O)Cc6ccccc6"]

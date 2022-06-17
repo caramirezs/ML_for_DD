@@ -12,8 +12,8 @@ fp_name = 'morgan2_c'
 frac_iter = 0.5  # No. jobs  50%
 t_max = int(4*24*60)  # Max time 60h
 gpu_id = 1
-scoring='precision'
-resample_factor = 0
+scoring='balanced_accuracy'
+resample_factor = 3
 
 # https://scikit-learn.org/stable/modules/model_evaluation.html
 
