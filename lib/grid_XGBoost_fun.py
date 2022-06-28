@@ -22,6 +22,7 @@ from skopt.callbacks import DeadlineStopper, DeltaYStopper
 def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
                           scoring='f1_weighted', resample_factor=0, resample_mode='under_sampling'):
     from lib.main_func_p4 import resampling_set
+    from math import sqrt
 
     print('---------------------------------------------------------')
     if resample_factor != 0:
@@ -39,11 +40,12 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     positive_class = min(list(df_set['activity'].value_counts()))
     spw = round(negative_class / positive_class, 2)  # Mayority / minority
     if spw > 3:
-        list_spw = [1.0, 1.5, 2.0, spw, round(0.85*spw, 2), round(0.88*spw, 2), round(0.91*spw, 2), round(0.94*spw),
-                    round(0.97*spw, 2), round(1.03*spw, 2), round(1.06*spw, 2), round(1.09*spw),
-                    round(1.12*spw, 2), round(1.15*spw, 2)]
+        list_spw = [1.0, 1.5, 2.0, spw, round(sqrt(spw),3), round(0.85*spw, 3), round(0.88*spw, 3), round(0.91*spw, 3),
+                    round(0.94*spw, 3), round(0.97*spw, 3)]
         print('scale_pos_weight')
         print(list_spw)
+    elif spw == 3:
+        list_spw = [1.0, 1.5, 2.0, 2.5, 2.7, 2.8, 3]
     else:
         list_spw = [1.0]
     print('---------------------------------------------------------')

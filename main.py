@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from prueba_modelo import test_concepto
+from apply_modelos import test_concepto
 import pandas as pd
 import json
 

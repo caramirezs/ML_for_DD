@@ -3,18 +3,18 @@ from lib.grid_XGBoost_fun import BayesSearchCV_XGBoost
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P56817'
+uniprot_id = 'P49841'
 # Parametros
 seed = 142854
 fp_name = 'morgan2_c'
 
 
 frac_iter = 0.5  # No. jobs  50%
-t_max = int(1000*60)  # Max time 60h
+t_max = int(24*4*60)  # Max time 60h
 gpu_id = 1
-scoring='balanced_accuracy'
-resample_factor = 5
-resample_mode='under_sampling'
+scoring='accuracy'
+resample_factor = 0
+resample_mode = 'under_sampling'
 
 # https://scikit-learn.org/stable/modules/model_evaluation.html
 
