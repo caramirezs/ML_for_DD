@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from apply_modelos import test_concepto
+from apply_modelos import test_concepto, prediction_uniprot
 import pandas as pd
 import json
 
@@ -17,4 +17,9 @@ def read_root():
 @app.post("/modelo")
 def update_item(params: Params):
     result = test_concepto(params.smiles)
+    return result
+
+@app.post("/P49841")
+def update_item(params: Params):
+    result = prediction_uniprot('P49841', params.smiles)
     return result

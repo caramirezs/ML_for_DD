@@ -11,7 +11,7 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P22303'
+uniprot_id = 'P12931'
 
 path_file = path(uniprot_id)
 
@@ -20,7 +20,7 @@ seed = 142854
 fp_name = 'morgan2_c'
 
 
-excel_name = f'{uniprot_id}/P22303_20220621115850_BayesSearchCV_XGBoots_f1_weighted_rf0'
+excel_name = f'{uniprot_id}/P12931_20220714134616_BayesSearchCV_XGBoots_precision_rf0'
 resample_factor = int(str.split(excel_name,'_')[-1][2:])
 resample_mode = 'under_sampling'
 
