@@ -118,7 +118,7 @@ def model_metrics_score(y_true, y_pred, y_prob_pred):
     return auc_score, acc_score, sens_score, spec_score, prec_score, f1_s, conf_m_score, results_ROF
 
 
-def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False):
+def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False, verbose=True):
     from lib.main_func_p1 import path
 
     path_file = path(uniprot_id)
@@ -132,9 +132,11 @@ def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False):
     if ratio < 1:
         ratio = 1 / ratio
 
-    print(f'Total={ori_compounds_len}.'
-          f' {activity_type[0]}({activity_count[0]})/{activity_type[1]}({activity_count[1]}).'
-          f' ratio={round(ratio, 2)}')
+    if verbose:
+        print(f'Protein: {uniprot_id}\n'
+              f'Total ={ori_compounds_len}\n'
+              f' [{activity_type[0]}({activity_count[0]})/{activity_type[1]}({activity_count[1]})] -'
+              f' ratio={round(ratio, 2)}')
 
     # train test split
     X_set, y_set = df_set[fp_name], df_set['activity']
@@ -170,9 +172,11 @@ def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False):
                     ['f1_score', f1_score_train, f1_score_test],
                     ['confusion_matrix', confusion_train, confusion_test]]
 
-    print('Results %s:' % str(model).split('(')[0],
-          '\n-------------------------------------')
-    print(classification_report(y_test, pred_test))
+    if verbose:
+        print('Results %s:' % str(model).split('(')[0],
+              '\n-------------------------------------')
+        print(classification_report(y_test, pred_test))
+
     df_results_model = pd.DataFrame(list_results, columns=['Metric', 'Train', 'Test'])
     df_results_model.set_index('Metric', inplace=True)
 
@@ -188,14 +192,15 @@ def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False):
 
 
 def modelXGBoost_fit_scores(xgb_clf, fp_name, df_set, df_valid,
-                            resample_factor=0, resample_mode='under_sampling'):
+                            resample_factor=0, resample_mode='under_sampling', verbose=True):
     from sklearn.model_selection import train_test_split
 
     # Balanced samplers
     if resample_factor != 0:
         ori_compounds_len = len(df_set)
         df_set_rsmp = resampling_set(df_set, mode=resample_mode, ratio=resample_factor)
-        print(f'{resample_mode} - {resample_factor}: {ori_compounds_len} to {len(df_set_rsmp)}')
+        if verbose:
+            print(f'{resample_mode} - {resample_factor}: {ori_compounds_len} to {len(df_set_rsmp)}')
     else:
         df_set_rsmp = df_set
 
@@ -322,3 +327,18 @@ def plot_probability_curve(df, uniprot_id, hue_order=None,
         else:
             plt.savefig(f'{path_file}_IMG06_compounds_probability.png', dpi=150, bbox_inches='tight')
     plt.show()
+
+# convert list of images to a single pdf
+def imgs_to_pdf(img_dir, save_dir=None, save_name=None, res=400):
+    from img2pdf import convert
+    list_images = list()
+    for file in os.listdir(img_dir):
+        try:
+            checker = file.rsplit('_')[1]
+        except IndexError:
+            checker = ''
+        if checker == 'summary':
+            list_images.append(f'{img_dir}/{file}')
+    with open(f'{save_dir}/{save_name}', 'wb') as pdf:
+        pdf.write(convert(list_images))
+    return None

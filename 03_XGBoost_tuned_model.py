@@ -12,16 +12,13 @@ import xgboost as xgb
 #####################################
 # proteina (uniprot_ID)
 uniprot_id = 'P12931'
-
-path_file = path(uniprot_id)
+excel_name = f'{uniprot_id}/P12931_20220714134616_BayesSearchCV_XGBoots_precision_rf0'  # without extension
 
 # Parametros
 seed = 142854
 fp_name = 'morgan2_c'
-
-
-excel_name = f'{uniprot_id}/P12931_20220714134616_BayesSearchCV_XGBoots_precision_rf0'
-resample_factor = int(str.split(excel_name,'_')[-1][2:])
+path_file = path(uniprot_id)
+resample_factor = int(str.split(excel_name, '_')[-1][2:])
 resample_mode = 'under_sampling'
 
 name_grid_file = f'grid_results/{excel_name}.xlsx'
@@ -46,8 +43,7 @@ print(f'Duplicados eliminados: {len(df_ori) - len(df_grid_results)}. Total datos
 df_train = pd.read_pickle(f'{path_file}_dataset_train')
 df_valid = pd.read_pickle(f'{path_file}_dataset_valid')
 
-params_dict_len = int(0.8*len(df_grid_results))
-params_dict_len = 500
+params_dict_len = min(int(0.8 * len(df_grid_results)), 500)
 
 tick_main = timer()
 
