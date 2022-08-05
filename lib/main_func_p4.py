@@ -328,8 +328,10 @@ def plot_probability_curve(df, uniprot_id, hue_order=None,
             plt.savefig(f'{path_file}_IMG06_compounds_probability.png', dpi=150, bbox_inches='tight')
     plt.show()
 
+
 # convert list of images to a single pdf
 def imgs_to_pdf(img_dir, save_dir=None, save_name=None, res=400):
+    import os
     from img2pdf import convert
     list_images = list()
     for file in os.listdir(img_dir):

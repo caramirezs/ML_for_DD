@@ -41,7 +41,7 @@ print(f'Datos de proteína cargados\n'
       f'Archivos a procesar: {total_files}\n'
       f'>> PROCESO INICIADO <<')
 
-for index, excel_file in enumerate(list_excelfiles_to_process):
+for index, excel_file in enumerate(list_excelfiles_to_process[:1]):
     # Load top_scores Excel file (one by one)
     top_scores = pd.read_excel(f'./top_scores/{uniprot_id}/{excel_file}')
     # params
@@ -164,8 +164,8 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
                       palette=['tab:orange', "tab:blue"])
     axes[0, 0].set_title(f'Total: {len(ADME_df)}', fontsize=title_size)
     axes[0, 0].bar_label(container=axes[0, 0].containers[0], fmt='%g', fontsize=normal_size)
-    axes[0, 0].set_xlabel('activity type', size=normal_size)
-    axes[0, 0].set_ylabel('count', size=normal_size)
+    axes[0, 0].set_xlabel('Activity type', size=normal_size)
+    axes[0, 0].set_ylabel('Count', size=normal_size)
     axes[0, 0].tick_params(labelsize=normal_size)
     # -------------------------------
 
@@ -182,7 +182,7 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     axes[0, 1].set_ylabel('True positive rate', size=normal_size)
     axes[0, 1].set_title(model_name + ' ROC curve', size=title_size)
     axes[0, 1].tick_params(labelsize=normal_size)
-    axes[0, 1].legend(fontsize=normal_size, loc=(1.04, 0))
+    axes[0, 1].legend(fontsize=normal_size, loc='lower right')
 
     # 3. Calibration curve
     df_plots_list = [df_internal, df_valid]
@@ -200,13 +200,13 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     axes[2, 1].set_ylabel('Fraction of positives', size=normal_size)
     axes[2, 1].set_title(model_name + ' calibration curve', size=title_size)
     axes[2, 1].tick_params(labelsize=normal_size)
-    axes[2, 1].legend(fontsize=normal_size, loc=(1.04, 0))
+    axes[2, 1].legend(fontsize=normal_size, loc='lower right')
 
     # 4 Confusion Matrix'
     plt.rc('font', size=20)
     disp1 = ConfusionMatrixDisplay.from_estimator(xgbc_tuned, X_valid_rsmpl, y_valid_rsmpl,
                                                   cmap=plt.cm.Blues, normalize=None,
-                                                  colorbar=False, ax=axes[2, 0])
+                                                  colorbar=True, ax=axes[2, 0])
     axes[2, 0].grid(False)
     axes[2, 0].tick_params(labelsize=normal_size)
     axes[2, 0].set_xlabel('Predicted label', size=normal_size)
@@ -215,7 +215,7 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
 
     disp2 = ConfusionMatrixDisplay.from_estimator(xgbc_tuned, X_valid_rsmpl, y_valid_rsmpl,
                                                   cmap=plt.cm.Blues, normalize='true',
-                                                  colorbar=False, ax=axes[3, 0])
+                                                  colorbar=True, ax=axes[3, 0])
     axes[3, 0].grid(False)
     axes[3, 0].tick_params(labelsize=normal_size)
     axes[3, 0].set_xlabel('Predicted label', size=normal_size)
@@ -253,7 +253,7 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     plt.savefig(f'{path_file}_summary_{img_name}', bbox_inches='tight')
     print(f'>> {uniprot_id}_summary_{img_name}: SAVED')
 
-    # plt.show()
+    plt.show()
     plt.close()
 img_dir = save_dir = f'./data/{uniprot_id}'
 save_name = f'SUMMARY_{uniprot_id}.pdf'
