@@ -1,8 +1,12 @@
 RamirezLab-GPUs,GPU,uniprot_id,metric,sreen_id,last_date,OBS
-Arrakis,gpu_0,,,,08/04,pendiente
-Arrakis,gpu_1,,,,08/04,pendiente
-Chernobyl,gpu_1,error,error,,08/04,"Error, actualizar CUDA"
-Death-Star,gpu_1,P27338,precision ,20027,08/04,
-Ragnar,gpu_1,P28482,balanced_accuracy,571512,08/04,
-Vecna ,gpu_1,P28482,accuracy,153993,08/04,
-Skynet ,gpu_1,P28482,precision,82792,08/04,
+Arrakis,gpu_0,"","",0,08/04,pendiente
+Arrakis,gpu_1,"","",0,08/04,pendiente
+Homelander,gpu_2,"","",0,08/04,"Error, actualizar CUDA"
+Death-Star,gpu_1,P27338,precision ,20027,09/04,running 02
+Ragnar,gpu_0,"","",0,"",""
+Ragnar,gpu_1,P28482,balanced_accuracy,571512,09/04,running 03
+Vecna ,gpu_0,"","",0,"",""
+Vecna ,gpu_1,P28482,accuracy,153993,08/04,running 03
+Skynet ,gpu_0,"","",0,"",""
+Skynet ,gpu_1,P28482,precision,82792,08/04,running 03
+Kingslanding ,gpu_0,"","",0,"",""

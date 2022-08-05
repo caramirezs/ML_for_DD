@@ -13,6 +13,7 @@ from skopt import BayesSearchCV
 # calllbacks funtion
 from skopt.callbacks import DeadlineStopper, DeltaYStopper
 
+
 ####
 # https://scikit-learn.org/stable/modules/model_evaluation.html
 # from sklearn import metrics
@@ -40,8 +41,9 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     positive_class = min(list(df_set['activity'].value_counts()))
     spw = round(negative_class / positive_class, 2)  # Mayority / minority
     if spw > 3:
-        list_spw = [1.0, 1.5, 2.0, spw, round(sqrt(spw),3), round(0.85*spw, 3), round(0.88*spw, 3), round(0.91*spw, 3),
-                    round(0.94*spw, 3), round(0.97*spw, 3)]
+        list_spw = [1.0, 1.5, 2.0, spw, round(sqrt(spw), 3), round(0.85 * spw, 3), round(0.88 * spw, 3),
+                    round(0.91 * spw, 3),
+                    round(0.94 * spw, 3), round(0.97 * spw, 3)]
         print('scale_pos_weight')
         print(list_spw)
     elif spw == 3:
@@ -116,7 +118,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
         score = round(-result['fun'], 3)
         print(f'---------------------------------------------------------')
         print(f'Protein_id: {uniprot_id} - gpu_id:{gpu_id}')
-        if resample_factor !=0:
+        if resample_factor != 0:
             print(f'resample_factor: {resample_factor} - {resample_mode}')
 
         print(f'>>>> Iteration {len(iters)} of {int(n_iter)} done. '
