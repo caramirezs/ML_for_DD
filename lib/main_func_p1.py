@@ -1,18 +1,26 @@
+def dir_new(file_path, verbose=False):
+    import os
+    try:
+        os.mkdir(file_path)
+        print(f'directory {file_path} created')
+    except FileExistsError:
+        if verbose:
+            print(f'¿already exist?')
+        pass
+    return file_path
+
+
 def path(uniprot_id):
     """
     :param uniprot_id: identificador de la proteina
     :return: path de la carpeta de la proteina
     """
-    import os
-    dirName = f'./data/{uniprot_id}'
-    try:
-        os.mkdir(dirName)
-    except FileExistsError:
-        pass
+    file_path = f'./data/{uniprot_id}'
+    dir_new(file_path)
     return f'./data/{uniprot_id}/{uniprot_id}'
 
 
-## TIMER ##
+# TIMER
 def timer(tick=None):
     import time
     if not tick:

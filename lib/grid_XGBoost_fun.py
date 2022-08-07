@@ -1,4 +1,4 @@
-from lib.main_func_p1 import path, timer
+from lib.main_func_p1 import path, timer, dir_new
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -144,8 +144,10 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     # results dataframe
     df = pd.DataFrame(clf.cv_results_)
     now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-    excel_name = f'{uniprot_id}_{now}_BayesSearchCV_XGBoots_{metric}_rf{resample_factor}'
-    file_name = f'./grid_results/{excel_name}.xlsx'
-    df.to_excel(file_name, sheet_name=uniprot_id, index=False)
-    print(f'Exported file: {file_name}')
+
+    file_path = dir_new(f'./grid_results/{uniprot_id}', verbose=False)
+    excel_name = f'{file_path}/{uniprot_id}_{now}_BayesSearchCV_XGBoots_{metric}_rf{resample_factor}.xlsx'
+    print(excel_name)
+    df.to_excel(excel_name, sheet_name=uniprot_id, index=False)
+    print(f'Exported file: {excel_name} / Save')
     return excel_name
