@@ -126,7 +126,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
               f'Time elapsed: {timer(tick)}')
         try:
             df_temp = pd.read_csv('early_stops.csv', index_col=0)
-            status = df_temp.loc[uniprot_id]['status']
+            status = df_temp.loc[uniprot_id]['early_stop']
             print(f'>>>> Early stop status: {status}')
         except:
             print(f'>>>> No early stop implemented')
