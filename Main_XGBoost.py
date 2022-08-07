@@ -1,3 +1,6 @@
+from lib.main_datasets_fun import uniprot_id_datasets
+from lib.grid_XGBoost_fun import BayesSearchCV_XGBoost
+
 from lib.main_func_p1 import timer, path
 from lib.main_func_p4 import modelXGBoost_fit_scores
 from lib.main_func_p4 import brier_score
@@ -8,21 +11,37 @@ import pandas as pd
 
 # XGBoost library
 import xgboost as xgb
+import os
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P12931'
-excel_name = f'{uniprot_id}/P12931_20220714134616_BayesSearchCV_XGBoots_precision_rf0'  # without extension
+uniprot_id = 'P49841'
+metric = 'accuracy'
+resample_factor = 0
+resample_mode = 'under_sampling'
+gpu_id = 1
+#####################################
 
 # Parametros
 seed = 142854
 fp_name = 'morgan2_c'
+frac_iter = 0.5  # No. jobs  50%
+t_max = 2  # Max time 60h
 path_file = path(uniprot_id)
-resample_factor = int(str.split(excel_name, '_')[-1][2:])
-resample_mode = 'under_sampling'
+#####################################
+# BayesSearchCV
+uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
+excel_name = BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter,
+                                   gpu_id=gpu_id, metric=metric, resample_factor=resample_factor,
+                                   resample_mode=resample_mode)
+# https://scikit-learn.org/stable/modules/model_evaluation.html
+os.system('clear')  # Limpiar pantalla
+print('>> Proceso BayesSearchCV terminado')
+print('--------------------------------------------------------')
 
-name_grid_file = f'grid_results/{excel_name}.xlsx'
-metric = '_'.join(name_grid_file.split('_')[5:])[:-5]
+#####################################
+# Tuned model
+name_grid_file = f'./grid_results/{excel_name}.xlsx'
 
 # Cargar archivo / eliminar columnas innecesarias
 df_ori = pd.read_excel(name_grid_file, sheet_name=0)
@@ -103,3 +122,5 @@ now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
 excel_name = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
 top_scores.to_excel(excel_name, sheet_name=uniprot_id, index=False)
 print(f'file {excel_name} save')
+
+#####################################

@@ -21,15 +21,15 @@ from skopt.callbacks import DeadlineStopper, DeltaYStopper
 ####
 
 def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
-                          scoring='f1_weighted', resample_factor=0, resample_mode='under_sampling'):
+                          metric='accuracy', resample_factor=0, resample_mode='under_sampling'):
     from lib.main_func_p4 import resampling_set
     from math import sqrt
 
     print('---------------------------------------------------------')
     if resample_factor != 0:
-        print(F'CONFIGURACIONES: scoring: {scoring}, resample: {resample_factor} / {resample_mode}')
+        print(F'CONFIGURACIONES: Metric: {metric}, resample: {resample_factor} / {resample_mode}')
     else:
-        print(F'CONFIGURACIONES: scoring: {scoring}')
+        print(F'CONFIGURACIONES: Metric: {metric}')
 
     # Load datasets
     path_file = path(uniprot_id)
@@ -105,7 +105,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     tick = timer()
     # Executing BayesSearchCV
     clf = BayesSearchCV(estimator=xgbc, search_spaces=param_grid, cv=5, n_iter=n_iter, n_jobs=-1,
-                        scoring=scoring, refit=True,
+                        scoring=metric, refit=True,
                         return_train_score=True, verbose=3, random_state=seed)
 
     # Callback
@@ -122,7 +122,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
             print(f'resample_factor: {resample_factor} - {resample_mode}')
 
         print(f'>>>> Iteration {len(iters)} of {int(n_iter)} done. '
-              f'scoring: {scoring} - Score: {score}. \n'
+              f'Metric: {metric} - Score: {score}. \n'
               f'Time elapsed: {timer(tick)}')
         try:
             df_temp = pd.read_csv('early_stops.csv', index_col=0)
@@ -144,7 +144,8 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     # results dataframe
     df = pd.DataFrame(clf.cv_results_)
     now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-    file_name = f'./grid_results/{uniprot_id}_{now}_BayesSearchCV_XGBoots_{scoring}_rf{resample_factor}.xlsx'
+    excel_name = f'{uniprot_id}_{now}_BayesSearchCV_XGBoots_{metric}_rf{resample_factor}'
+    file_name = f'./grid_results/{excel_name}.xlsx'
     df.to_excel(file_name, sheet_name=uniprot_id, index=False)
     print(f'Exported file: {file_name}')
-    return df
+    return excel_name

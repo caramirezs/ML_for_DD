@@ -1,12 +1,12 @@
 Uniprot_id,BayesSearchCV,top_scores,final_model,score,resample_factor,pendiente
-P00533,x,x,x,balanced_accuracy,rf0,rf3
-P56817,x,x,x,precision,rf3
-P42336,x,x,x,balanced_accuracy,rf0,
+P00533,x,x,x, , ,
+P56817,x,x,x, , ,
+P42336,x,x,x, , ,
 P22303,x,x,,,
-P12931,x,"",,,
-P49841,x,,,,,Francisca
-P27338,,,,
-P28482,,,,
+P12931,in progress,"",,,,process
+P49841,in progress,,,,,Francisca
+P27338,in progress,,,,,process
+P28482,in progress,,,,,process
 P06276,,,,
 P21397,,,,
 O75116,,,,
