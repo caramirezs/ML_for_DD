@@ -24,6 +24,7 @@ dependencies:
   - openpyxl
   - tensorflow
   - catboost
+  - GitPython
   - pip:
     - nbconvert==5.4.1 
     - xgboost

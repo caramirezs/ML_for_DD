@@ -12,6 +12,7 @@ import pandas as pd
 # XGBoost library
 import xgboost as xgb
 import os
+import  git
 
 #####################################
 # proteina (uniprot_ID)
@@ -31,7 +32,7 @@ path_file = path(uniprot_id)
 #####################################
 # BayesSearchCV
 uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
-excel_name = BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter,
+excel_name_02 = BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter,
                                    gpu_id=gpu_id, metric=metric, resample_factor=resample_factor,
                                    resample_mode=resample_mode)
 # https://scikit-learn.org/stable/modules/model_evaluation.html
@@ -41,7 +42,7 @@ print('--------------------------------------------------------')
 
 #####################################
 # Tuned model
-name_grid_file = f'./grid_results/{excel_name}.xlsx'
+name_grid_file = f'./grid_results/{excel_name_02}.xlsx'
 
 # Cargar archivo / eliminar columnas innecesarias
 df_ori = pd.read_excel(name_grid_file, sheet_name=0)
@@ -119,8 +120,9 @@ top_scores.sort_values(by=['calibration_score'], inplace=True)
 
 # Save top_records
 now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-excel_name = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
-top_scores.to_excel(excel_name, sheet_name=uniprot_id, index=False)
-print(f'file {excel_name} save')
+excel_name_03 = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
+top_scores.to_excel(excel_name_03, sheet_name=uniprot_id, index=False)
+print(f'file {excel_name_03} save')
 
 #####################################
+#AutouploadtoGit

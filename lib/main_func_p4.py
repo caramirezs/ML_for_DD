@@ -344,3 +344,19 @@ def imgs_to_pdf(img_dir, save_dir=None, save_name=None, res=400):
     with open(f'{save_dir}/{save_name}', 'wb') as pdf:
         pdf.write(convert(list_images))
     return None
+
+
+# AutouploadGIT
+
+def git_init():
+    import git
+    master = 'https://github.com/caramirezs/ML_for_DD'
+    repo = git.Repo('.')
+    repository.create_remote('master', 'https://github.com/foo/test.git')
+
+
+def git_push(list_files, server):
+    import git
+    for file in list_files:
+        repo.git.add(file)
+    repo.git.commit('-m', f'Archivos actualizados a master desde {server}', author=f'{server}')
