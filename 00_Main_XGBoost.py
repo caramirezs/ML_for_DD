@@ -12,7 +12,6 @@ import pandas as pd
 # XGBoost library
 import xgboost as xgb
 import os
-# esto es una prueba . . .
 
 #####################################
 # proteina (uniprot_ID)
