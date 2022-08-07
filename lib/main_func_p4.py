@@ -360,7 +360,7 @@ def git_init():
 def git_push(list_files, server):
     import git
     PATH_OF_GIT_REPO = './.git'
-    COMMIT_MESSAGE = f'Archivos actualizados a master desde {server}'
+    COMMIT_MESSAGE = f'Files commit/push to master from {server}'
     try:
         repo = git.Repo(PATH_OF_GIT_REPO)
         for file in list_files:
