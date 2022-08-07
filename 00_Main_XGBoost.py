@@ -12,7 +12,7 @@ import pandas as pd
 # XGBoost library
 import xgboost as xgb
 import os
-
+#ok ok ok o ko
 #####################################
 # proteina (uniprot_ID)
 uniprot_id = 'P49841'
