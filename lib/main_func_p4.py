@@ -363,4 +363,3 @@ def git_push(list_files, server):
         print(COMMIT_MESSAGE)
     except:
         print('Some error occured while pushing the code')
-#  END
