@@ -347,16 +347,6 @@ def imgs_to_pdf(img_dir, save_dir=None, save_name=None, res=400):
 
 
 # AutouploadGIT
-
-def git_init():
-    import git
-    master = 'https://github.com/caramirezs/ML_for_DD'
-    repo_remote = git.Repo(master)
-    repo_local = git.Repo('.')
-    origin = repo_local.remote(name='origin')
-    origin.pull()
-
-
 def git_push(list_files, server):
     import git
     PATH_OF_GIT_REPO = './.git'
@@ -365,6 +355,7 @@ def git_push(list_files, server):
         repo = git.Repo(PATH_OF_GIT_REPO)
         for file in list_files:
             repo.git.add(file)
+            print(f'File {file} add')
             repo.index.commit(COMMIT_MESSAGE)
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='master')
