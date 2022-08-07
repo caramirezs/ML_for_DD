@@ -355,7 +355,7 @@ def git_push(list_files, server):
         repo = git.Repo(PATH_OF_GIT_REPO)
         for file in list_files:
             repo.git.add(file)
-            print(f'File {file} add')
+            print(f'> File {file} add')
             repo.index.commit(COMMIT_MESSAGE)
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='master')
