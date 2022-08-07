@@ -19,4 +19,3 @@ uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
 BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter, gpu_id=gpu_id,
                       metric=metric, resample_factor=resample_factor, resample_mode=resample_mode)
 # https://scikit-learn.org/stable/modules/model_evaluation.html
-## OKok
