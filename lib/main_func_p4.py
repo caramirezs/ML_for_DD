@@ -360,3 +360,4 @@ def git_push(list_files, server):
     for file in list_files:
         repo.git.add(file)
     repo.git.commit('-m', f'Archivos actualizados a master desde {server}', author=f'{server}')
+    #asdasdasd
