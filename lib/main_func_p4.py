@@ -361,9 +361,9 @@ def git_push(list_files, server):
     import git
     master = 'https://github.com/caramirezs/ML_for_DD'
     repo_local = git.Repo.init('.')
-    repo_local.create_remote('master', master)
+    # repo_local.create_remote('master', master)
     for file in list_files:
         repo_local = git.Repo('.')
         repo_local.git.add(file)
     repo_local.git.commit('-m', f'Archivos actualizados a master desde {server}')
-    repo_local.remotes.origin.push('master:master')
+    repo_local.remotes.origin.push()
