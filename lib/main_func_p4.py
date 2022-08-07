@@ -363,5 +363,5 @@ def git_push(list_files, server):
         repo_local = git.Repo('.')
         repo_local.git.add(file)
     repo_local.git.commit('-m', f'Archivos actualizados a master desde {server}')
-    origin = repo_local.remote(name='origin')
+    origin = repo_local.remote(name='master')
     origin.push()
