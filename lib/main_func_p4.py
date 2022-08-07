@@ -360,5 +360,6 @@ def git_push(list_files, server):
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='master')
         origin.push()
+        print(COMMIT_MESSAGE)
     except:
         print('Some error occured while pushing the code')
