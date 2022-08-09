@@ -358,8 +358,9 @@ def git_push(list_files, server):
             print(f'> File {file} add')
             repo.index.commit(COMMIT_MESSAGE)
         repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='master')
+        origin = repo.remote(name='origin')
         origin.push()
         print(COMMIT_MESSAGE)
     except:
         print('Some error occured while pushing the code')
+        rigin.push()
