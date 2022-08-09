@@ -12,11 +12,11 @@
 /lib/__pycache__
 /grid_results/__pycache__
 /top_scores/__pycache__
+lib/messages_fun.py
 05_Metric_comparison.ipynb
 06_XGBoost_clf.ipynb
 app.log
 main.py
-messages_fun.py
 pruebas.py
 xx_Summary.ipynb
 xx_test_models_grid_results.ipynb

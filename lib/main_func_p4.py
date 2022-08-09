@@ -346,7 +346,24 @@ def imgs_to_pdf(img_dir, save_dir=None, save_name=None, res=400):
     return None
 
 
-# AutouploadGIT
+# Autoupload GIT
+
+
+def git_pull():
+    import git
+    PATH_OF_GIT_REPO = './.git'
+    try:
+        repo = git.Repo(PATH_OF_GIT_REPO)
+        origin = repo.remote(name='origin')
+        for remote in repo.remotes:
+            remote.fetch()
+        origin.pull()
+    except:
+        print('Some error occured while fetch/pull the code')
+
+    return None
+
+
 def git_push(list_files, server):
     import git
     PATH_OF_GIT_REPO = './.git'
@@ -363,4 +380,4 @@ def git_push(list_files, server):
         print(COMMIT_MESSAGE)
     except:
         print('Some error occured while pushing the code')
-        rigin.push()
+    return None
