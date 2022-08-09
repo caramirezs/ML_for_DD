@@ -123,7 +123,7 @@ top_scores.sort_values(by=['calibration_score'], inplace=True)
 # Save top_records
 now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
 
-file_path = dir_new(f'./top_scores/{uniprot_id}', verbose=False)
+file_path = dir_new(f'./files_export_servers/{uniprot_id}', verbose=False)
 excel_name_03 = f'{file_path}/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric_rf}.xlsx'
 top_scores.to_excel(excel_name_03, sheet_name=uniprot_id, index=False)
 print(f'Exported file: {excel_name_03} / Save')
