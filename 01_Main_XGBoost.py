@@ -5,7 +5,7 @@ from lib.grid_XGBoost_fun import BayesSearchCV_XGBoost
 from lib.main_func_p1 import timer, path, dir_new
 from lib.main_func_p4 import modelXGBoost_fit_scores
 from lib.main_func_p4 import brier_score
-from lib.main_func_p4 import git_push
+from lib.main_func_p4 import git_pull, git_push
 from datetime import datetime
 from collections import OrderedDict
 
@@ -29,10 +29,14 @@ server = 'Local_PC'  # Server name
 seed = 142854
 fp_name = 'morgan2_c'
 frac_iter = 0.5  # No. jobs  50%
-t_max = int(24 * 4)  # Max in hours
+t_max = 60 * 24 * 4  # min (4 days)
 path_file = path(uniprot_id)
 
 #####################################
+# Fetch & Pull
+git_pull()
+#####################################
+
 # BayesSearchCV
 uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
 excel_name_02 = BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter,
