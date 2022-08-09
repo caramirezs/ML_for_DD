@@ -45,7 +45,7 @@ print('--------------------------------------------------------')
 
 #####################################
 # Tuned model
-
+metric_rf = f'{metric}_{resample_factor}'
 # Cargar archivo / eliminar columnas innecesarias
 df_ori = pd.read_excel(excel_name_02, sheet_name=0)
 df_grid_results = df_ori[['params', 'mean_test_score', 'std_test_score', 'rank_test_score', 'mean_train_score',
@@ -124,7 +124,7 @@ top_scores.sort_values(by=['calibration_score'], inplace=True)
 now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
 
 file_path = dir_new(f'./top_scores/{uniprot_id}', verbose=False)
-excel_name_03 = f'{file_path}/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
+excel_name_03 = f'{file_path}/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric_rf}.xlsx'
 top_scores.to_excel(excel_name_03, sheet_name=uniprot_id, index=False)
 print(f'Exported file: {excel_name_03} / Save')
 
