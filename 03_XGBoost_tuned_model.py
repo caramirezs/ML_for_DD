@@ -11,8 +11,8 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P06276'
-excel_name = f'{uniprot_id}/P06276_20220521114755_BayesSearchCV_XGBoots_f1_weighted_rf0'  # without extension
+uniprot_id = 'P00533'
+excel_name = f'{uniprot_id}/P00533_20220608105954_BayesSearchCV_XGBoots_jaccard_rf0'  # without extension
 
 # Parametros
 seed = 142854
