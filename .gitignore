@@ -5,4 +5,7 @@ xx_Summary.ipynb
 xx_test_models_grid_results.ipynb
 xx_test_models_top_socres.ipynb
 pruebas.py
-00_Main_XGBoost.py
+GPU0_main.py
+GPU1_main.py
+main.pya
+app.log

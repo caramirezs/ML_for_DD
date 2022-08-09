@@ -2,11 +2,11 @@ RamirezLab-GPUs,GPU,uniprot_id,metric,OBS,date
 Arrakis,gpu_0,"","",Standby,08/04
 Arrakis,gpu_1,"","",Standby,08/04
 Homelander,gpu_2,"","",Standby,08/04
-Death-Star,gpu_1,P06276,balanced_accuracy,running 02,08/07
+Death-Star,gpu_1, , , ,08/07
 Ragnar,gpu_0,P12931,balanced_accuracy-rf3,running 02,08/07
 Ragnar,gpu_1,P49841,f1_weighted-rf3,running 02,08/07
 Vecna ,gpu_0,P49841,precision-rf3,running 02,08/07
 Vecna ,gpu_1,P12931,precision-rf3,running 02,08/07
 Skynet ,gpu_0,P49841,balanced_accuracy-rf3,running 02,08/07
 Skynet ,gpu_1,P27338,f1_weighted,running 02,08/07
-Kingslanding ,gpu_0,error,error,error,08/07
+Kingslanding ,gpu_0, , , ,08/07

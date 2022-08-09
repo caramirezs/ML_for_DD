@@ -41,7 +41,7 @@ print(f'Datos de proteína cargados\n'
       f'Archivos a procesar: {total_files}\n'
       f'>> PROCESO INICIADO <<')
 
-for index, excel_file in enumerate(list_excelfiles_to_process[:1]):
+for index, excel_file in enumerate(list_excelfiles_to_process):
     # Load top_scores Excel file (one by one)
     top_scores = pd.read_excel(f'./top_scores/{uniprot_id}/{excel_file}')
     # params
@@ -253,7 +253,7 @@ for index, excel_file in enumerate(list_excelfiles_to_process[:1]):
     plt.savefig(f'{path_file}_summary_{img_name}', bbox_inches='tight')
     print(f'>> {uniprot_id}_summary_{img_name}: SAVED')
 
-    plt.show()
+    # plt.show()
     plt.close()
 img_dir = save_dir = f'./data/{uniprot_id}'
 save_name = f'SUMMARY_{uniprot_id}.pdf'

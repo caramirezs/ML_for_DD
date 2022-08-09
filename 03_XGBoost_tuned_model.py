@@ -11,8 +11,8 @@ import xgboost as xgb
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P12931'
-excel_name = f'{uniprot_id}/P12931_20220714134616_BayesSearchCV_XGBoots_precision_rf0'  # without extension
+uniprot_id = 'P06276'
+excel_name = f'{uniprot_id}/P06276_20220521114755_BayesSearchCV_XGBoots_f1_weighted_rf0'  # without extension
 
 # Parametros
 seed = 142854
@@ -100,6 +100,6 @@ top_scores.sort_values(by=['calibration_score'], inplace=True)
 
 # Save top_records
 now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-excel_name = f'./top_scores/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
+excel_name = f'./top_scores/{uniprot_id}/{uniprot_id}_{now}_top_scores_XGBClassifier_{metric}.xlsx'
 top_scores.to_excel(excel_name, sheet_name=uniprot_id, index=False)
 print(f'file {excel_name} save')
