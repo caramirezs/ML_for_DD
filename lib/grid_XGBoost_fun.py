@@ -22,8 +22,6 @@ from skopt.callbacks import DeadlineStopper, DeltaYStopper
 
 def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
                           metric='accuracy', resample_factor=0, resample_mode='under_sampling'):
-    dir_new(f'./grid_results')
-    dir_new(f'./top_scores')
 
     from lib.main_func_p4 import resampling_set
     from math import sqrt
@@ -147,7 +145,8 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     # results dataframe
     df = pd.DataFrame(clf.cv_results_)
     now = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
-
+    dir_new(f'./grid_results')
+    dir_new(f'./top_scores')
     file_path = dir_new(f'./grid_results/{uniprot_id}', verbose=False)
     excel_name = f'{file_path}/{uniprot_id}_{now}_BayesSearchCV_XGBoots_{metric}_rf{resample_factor}.xlsx'
     print(excel_name)
