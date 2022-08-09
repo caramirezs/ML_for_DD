@@ -3,6 +3,7 @@ from lib.main_datasets_fun import uniprot_id_datasets
 from lib.grid_XGBoost_fun import BayesSearchCV_XGBoost
 
 from lib.main_func_p1 import timer, path, dir_new
+from lib.messages_fun import messages_servers
 from lib.main_func_p4 import modelXGBoost_fit_scores
 from lib.main_func_p4 import brier_score
 from lib.main_func_p4 import git_pull, git_push
@@ -19,10 +20,10 @@ import os
 # proteina (uniprot_ID)
 uniprot_id = 'P49841'
 metric = 'f1_weighted'
-resample_factor = 3
+resample_factor = 0
 resample_mode = 'under_sampling'
-gpu_id = 1
-server = 'Local_PC'  # Server name
+gpu_id = 0
+server = 'Arrakis'  # Server name
 
 #####################################
 # Parametros
@@ -134,6 +135,10 @@ print(f'Exported file: {excel_name_03} / Save')
 
 print('>> Tune model finished')
 print('--------------------------------------------------------')
+#####################################
+# mini bot WhatsApp
+messages_servers(type='process_complete', server=server, protein_id=uniprot_id,
+                 metric=metric, resample_factor=resample_factor, GPU_id=gpu_id)
 #####################################
 # AutouploadtoGit
 print('>> Upload file to git')
