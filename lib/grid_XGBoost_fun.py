@@ -22,6 +22,9 @@ from skopt.callbacks import DeadlineStopper, DeltaYStopper
 
 def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
                           metric='accuracy', resample_factor=0, resample_mode='under_sampling'):
+    dir_new(f'./grid_results)
+    dir_new(f'./top_scores)
+
     from lib.main_func_p4 import resampling_set
     from math import sqrt
 
