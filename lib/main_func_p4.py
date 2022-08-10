@@ -370,12 +370,20 @@ def git_push(list_files, server):
     COMMIT_MESSAGE = f'Files commit/push to master from {server}'
     try:
         repo = git.Repo(PATH_OF_GIT_REPO)
+        origin = repo.remote(name='origin')
+        # Upload Git local
+        for remote in repo.remotes:
+            remote.fetch()
+        origin.pull()
+
+        # Add files & Commit
         for file in list_files:
             repo.git.add(file)
             print(f'> File {file} add')
             repo.index.commit(COMMIT_MESSAGE)
         repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='origin')
+
+        # Push files to remote
         origin.push()
         print(COMMIT_MESSAGE)
     except:
