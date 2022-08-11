@@ -16,21 +16,7 @@ import pandas as pd
 import xgboost as xgb
 import os
 
-#####################################
-# proteina (uniprot_ID)
-uniprot_id = 'P49841'
-metric = 'f1_weighted'
-resample_factor = 0
-resample_mode = 'under_sampling'
-gpu_id = 0
-server = 'Arrakis'  # Server name
 
-#####################################
-# Parametros
-seed = 142854
-fp_name = 'morgan2_c'
-frac_iter = 0.5  # No. jobs  50%
-t_max = 60 * 24 * 4  # min (4 days)
 path_file = path(uniprot_id)
 
 #####################################
@@ -50,7 +36,7 @@ print('--------------------------------------------------------')
 
 #####################################
 # Tuned model
-metric_rf = f'{metric}_{resample_factor}'
+metric_rf = f'{metric}_r{resample_factor}'
 # Cargar archivo / eliminar columnas innecesarias
 df_ori = pd.read_excel(excel_name_02, sheet_name=0)
 df_grid_results = df_ori[['params', 'mean_test_score', 'std_test_score', 'rank_test_score', 'mean_train_score',
