@@ -370,6 +370,7 @@ def git_push(list_files, server):
     COMMIT_MESSAGE = f'Files commit/push to master from {server}'
     try:
         repo = git.Repo(PATH_OF_GIT_REPO)
+        repo.git.reset('--hard')
         origin = repo.remote(name='origin')
         # Upload Git local
         for remote in repo.remotes:
