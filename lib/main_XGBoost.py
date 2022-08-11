@@ -16,9 +16,9 @@ import pandas as pd
 import xgboost as xgb
 import os
 
+
 def main_process(uniprot_id, metric, resample_factor, resample_mode,
                  gpu_id, server, seed, fp_name, frac_iter, t_max):
-
     path_file = path(uniprot_id)
 
     #####################################
