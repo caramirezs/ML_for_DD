@@ -112,7 +112,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
                         return_train_score=True, verbose=3, random_state=seed)
 
     # Callback
-    overdone_control = DeltaYStopper(delta=1e-6)
+    overdone_control = DeltaYStopper(delta=1e-8)
     time_limit_control = DeadlineStopper(total_time=60 * t_max)
 
     def cb(result):
