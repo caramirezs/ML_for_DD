@@ -39,7 +39,7 @@ def main_process(uniprot_id, metric, resample_factor, resample_mode,
 
     #####################################
     # Tuned model
-    metric_rf = f'{metric}_r{resample_factor}'
+    metric_rf = f'{metric}_rf{resample_factor}'
     # Cargar archivo / eliminar columnas innecesarias
     df_ori = pd.read_excel(excel_name_02, sheet_name=0)
     df_grid_results = df_ori[['params', 'mean_test_score', 'std_test_score', 'rank_test_score', 'mean_train_score',
