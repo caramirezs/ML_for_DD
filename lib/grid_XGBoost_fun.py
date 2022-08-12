@@ -20,8 +20,9 @@ from skopt.callbacks import DeadlineStopper, DeltaYStopper
 # print(sorted(metrics.SCORERS.keys()))
 ####
 
-def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.25, gpu_id=0,
-                          metric='accuracy', resample_factor=0, resample_mode='under_sampling'):
+def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10, frac_iter=0.5, gpu_id=0,
+                          metric='accuracy', resample_factor=0, resample_mode='under_sampling',
+                          cv=5):
 
     from lib.main_func_p4 import resampling_set
     from math import sqrt
@@ -65,7 +66,8 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     X_set, y_set = df_set_rsmp[fp_name], df_set_rsmp['activity']
 
     # train test split with randomization performed (although randomization is not necessary)
-    X_train, X_test, y_train, y_test = train_test_split(X_set, y_set, test_size=0.2, random_state=seed, stratify=y_set)
+    X_train, X_test, y_train, y_test = train_test_split(X_set, y_set, test_size=0.2,
+                                                        random_state=seed, stratify=y_set)
 
     X_train, X_test = X_train.to_list(), X_test.to_list()
 
@@ -105,7 +107,7 @@ def BayesSearchCV_XGBoost(uniprot_id, fp_name='morgan2_c', seed=142857, t_max=10
     # start time
     tick = timer()
     # Executing BayesSearchCV
-    clf = BayesSearchCV(estimator=xgbc, search_spaces=param_grid, cv=5, n_iter=n_iter, n_jobs=-1,
+    clf = BayesSearchCV(estimator=xgbc, search_spaces=param_grid, cv=cv, n_iter=n_iter, n_jobs=-1,
                         scoring=metric, refit=True,
                         return_train_score=True, verbose=3, random_state=seed)
 

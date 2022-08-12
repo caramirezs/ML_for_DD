@@ -18,7 +18,8 @@ import os
 
 
 def main_process(uniprot_id, metric, resample_factor, resample_mode,
-                 gpu_id, server, seed, fp_name, frac_iter, t_max):
+                 gpu_id, server, seed, fp_name, frac_iter, t_max,
+                 cv=5):
     path_file = path(uniprot_id)
 
     #####################################
@@ -30,7 +31,7 @@ def main_process(uniprot_id, metric, resample_factor, resample_mode,
     uniprot_id_datasets(uniprot_id, fp_name=fp_name, seed=seed)
     excel_name_02 = BayesSearchCV_XGBoost(uniprot_id, fp_name=fp_name, seed=seed, t_max=t_max, frac_iter=frac_iter,
                                           gpu_id=gpu_id, metric=metric, resample_factor=resample_factor,
-                                          resample_mode=resample_mode)
+                                          resample_mode=resample_mode, cv=cv)
     # https://scikit-learn.org/stable/modules/model_evaluation.html
     os.system('clear')  # Limpiar pantalla
     print('>> Process BayesSearchCV finished')
