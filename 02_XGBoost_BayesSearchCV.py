@@ -3,11 +3,11 @@ from lib.grid_XGBoost_fun import BayesSearchCV_XGBoost
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'P49841'
-metric='accuracy'
-resample_factor = 0
-resample_mode = 'under_sampling'
-gpu_id = 1
+uniprot_id = 'P36544-1'
+metric='precision'
+resample_factor = 3
+resample_mode = 'over_sampling'
+gpu_id = 0
 
 # Parametros
 seed = 142854
