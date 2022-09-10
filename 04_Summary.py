@@ -49,10 +49,11 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     resample_factor = int(str.split(excel_file, '_')[-1][2:][:-5])
     resample_mode = 'under_sampling'
     model_name = f'XGBoost_Clf'
+    date = str.split(excel_file, '_')[1][:8]
     print(f'> {index+1}/{total_files}: {uniprot_id} - {score_metric} - {resample_factor}')
 
     # export image name
-    img_name = f'{score_metric}_{resample_factor}.png'
+    img_name = f'{score_metric}_{date}_{resample_factor}.png'
 
     # Load train and validation datasets
     df_train = pd.read_pickle(f'{path_file}_dataset_train')
@@ -142,7 +143,8 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     gs = GridSpec(grid_rows, grid_columns, figure=figure)
     gs_2 = GridSpec(grid_rows, grid_columns, figure=figure, width_ratios=[1.5, 1.5, 1, 0])
     figure.suptitle(
-        f'Protein: {uniprot_id} - model: {model_name} - score: {score_metric} - resample_factor: {resample_factor} ',
+        f'Protein: {uniprot_id} - model: {model_name} - score: {score_metric} '
+        f'- resample_factor: {resample_factor} ({date}) ',
         size=20)
     for i in range(grid_rows):
         for j in range(grid_columns):
