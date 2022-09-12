@@ -15,12 +15,12 @@
 lib/messages_fun.py
 10_Metric_comparison.ipynb
 11_XGBoost_clf.ipynb
-app.log
-main.py
 pruebas.py
+pruebas.ipynb
 xx_Summary.ipynb
 xx_test_models_grid_results.ipynb
 xx_test_models_top_socres.ipynb
 GPU0_main.py
 GPU1_main.py
 /predictor
+/BD_dataweb
