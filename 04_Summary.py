@@ -34,7 +34,7 @@ list_excelfiles_to_process = []
 for file in os.listdir(f'./top_scores/{uniprot_id}'):
     list_excelfiles_to_process.append(file)
 total_files = len(list_excelfiles_to_process)
-# Load and read the set universe
+# Load and read the data universe
 ADME_df = pd.read_csv(f'{path_file}_02_ligands_smiles_ADME_lipinski.csv')
 
 print(f'Datos de proteína cargados\n'
@@ -161,10 +161,12 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
     # 1. Plot  count active /inactive
     if all_type:
         sns.countplot(ax=axes[0, 0], x='activity_type', data=ADME_df, order=['Inactive', 'Intermediate', 'Active'])
+        total = len(ADME_df)
     else:
         sns.countplot(ax=axes[0, 0], x='activity_type', data=ADME_df, order=['Inactive', 'Active'],
                       palette=['tab:orange', "tab:blue"])
-    axes[0, 0].set_title(f'Total: {len(ADME_df)}', fontsize=title_size)
+        total = len(ADME_df[ADME_df['activity_type']!= 'Intermediate'])
+    axes[0, 0].set_title(f'Total: {total}', fontsize=title_size)
     axes[0, 0].bar_label(container=axes[0, 0].containers[0], fmt='%g', fontsize=normal_size)
     axes[0, 0].set_xlabel('Activity type', size=normal_size)
     axes[0, 0].set_ylabel('Count', size=normal_size)
