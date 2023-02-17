@@ -33,12 +33,12 @@ def uniprot_id_datasets(uniprot_id, fp_name='morgan2_c', seed=142857):
     # Train a test set
     test_size = 0.15  # test_size: 15%
     from sklearn.model_selection import train_test_split
-    fp_df_train, fp_df_test = train_test_split(fp_df, test_size=test_size, shuffle=True, stratify=fp_df['activity'],
+    fp_df_train, fp_df_valid = train_test_split(fp_df, test_size=test_size, shuffle=True, stratify=fp_df['activity'],
                                                random_state=seed)
     fp_df_train.reset_index(drop=True, inplace=True)
-    fp_df_test.reset_index(drop=True, inplace=True)
+    fp_df_valid.reset_index(drop=True, inplace=True)
     fp_df_train.to_pickle(f'{path_file}_dataset_train')
     print(f'>>> SAVED: {path_file}_dataset_train, compounds: {len(fp_df_train)}')
-    fp_df_test.to_pickle(f'{path_file}_dataset_valid')
-    print(f'>>> SAVED: {path_file}_dataset_valid, compounds: {len(fp_df_test)}')
+    fp_df_valid.to_pickle(f'{path_file}_dataset_valid')
+    print(f'>>> SAVED: {path_file}_dataset_valid, compounds: {len(fp_df_valid)}')
     return None

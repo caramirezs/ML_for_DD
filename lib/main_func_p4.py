@@ -118,10 +118,10 @@ def model_metrics_score(y_true, y_pred, y_prob_pred):
     return auc_score, acc_score, sens_score, spec_score, prec_score, f1_s, conf_m_score, results_ROF
 
 
-def model_clf(model, fp_name, uniprot_id, seed=142857, save_log=False, verbose=True):
+def model_clf(model, fp_name, uniprot_id, path_file, seed=142857, save_log=False, verbose=True):
     from lib.main_func_p1 import path
 
-    path_file = path(uniprot_id)
+    # path_file = path(uniprot_id)
     # Import train/test dataset
     df_set = pd.read_pickle(f'{path_file}_dataset_train')
     ori_compounds_len = len(df_set)

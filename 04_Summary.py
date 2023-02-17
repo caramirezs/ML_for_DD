@@ -74,8 +74,8 @@ for index, excel_file in enumerate(list_excelfiles_to_process):
                                                                      resample_factor=resample_factor,
                                                                      resample_mode=resample_mode, verbose=False)
     xgbc_tuned.save_model(f'./models/{uniprot_id}_model.ubj')
-    xgbc_tuned, df_results_model_tuned, results_ROC_fp = model_clf(xgbc_tuned, fp_name, uniprot_id, seed=seed,
-                                                                   save_log=True, verbose=False)
+    xgbc_tuned, df_results_model_tuned, results_ROC_fp = model_clf(xgbc_tuned, fp_name, uniprot_id, path_file,
+                                                                   seed=seed, save_log=True, verbose=False)
 
     # Calcular probabilidades del conjunto de datos externo
     pred_valid = xgbc_tuned.predict(X_valid)
