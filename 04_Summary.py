@@ -19,7 +19,7 @@ from lib.main_func_p4 import model_clf, modelXGBoost_fit_scores, resampling_set,
 
 #####################################
 # proteina (uniprot_ID)
-uniprot_id = 'O75116'  # Solmante es necesario cambiar la proteina
+uniprot_id = 'P22303'  # Solmante es necesario cambiar la proteina
 
 # Parametros
 path_file = path(uniprot_id)

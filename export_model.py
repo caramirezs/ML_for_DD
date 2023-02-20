@@ -5,7 +5,7 @@ from lib.main_func_p4 import modelXGBoost_fit_scores
 
 #INPUT
 uniprot_id = 'P00533'
-best_model_excel = f'P00533_20220823081135_top_scores_XGBClassifier_precision_rf0.xlsx'
+best_model_excel = f'P00533_20220829085632_top_scores_XGBClassifier_balanced_accuracy_rf0.xlsx'
 
 # Params
 path_file = path(uniprot_id)
